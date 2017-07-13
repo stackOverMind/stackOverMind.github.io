@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+
+    <html lang="zh-Hans">
+  
+<head>
+  <meta charset="utf-8">
+  
+  <title>hexo 使用心得 | Sigularity-Jack X</title>
+  <meta name="author" content="Jack X">
+  
+  <meta name="description" content="hexohexo 是一套强大而简单的博客系统，能够生成静态网页部署到任何容器中。而且有很多现成的theme可选，纯nodejs实现。
+# 全局安装hexonpm install -g hexo-cli # 建站hexo init &amp;lt;forder&amp;gt;# 新建一篇文章，在 source/_posts/目录下可以编辑这篇文章了hexo new post &amp;lt;title&amp;gt;# 生成静态网站hexo generate
+详情移步官方文档
+hexo 在本地玩6了之后我们就想找个地方部署起来，土豪的路子是到阿里云租个vps，然后装个nginx，不过现在是云服务的时代了，能轻则轻，仅仅为了搭建个博客买个阿里云有点太重，跟钱没啥关系。
+下面我介绍一个免费。。啊不对。。轻量级的解决方案：
+hexo 结合 travis CI，github pages 做自动发布">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="hexo 使用心得"/>
+  <meta property="og:site_name" content="Sigularity-Jack X"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <meta http-equiv="Content-Language" content="zh-Hans"/>
+  
+
+  <link href="/img/favicon.png" rel="icon">
+  
+    <link rel="apple-touch-icon" href="/img/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-icon.png">
+    
+
+  <link rel="alternate" href="/atom.xml" title="Sigularity-Jack X" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <style type="text/css">
+  /* Tim Pietrusky advanced checkbox hack (Android <= 4.1.2) */
+body{ -webkit-animation: bugfix infinite 1s; }
+@-webkit-keyframes bugfix { from {padding:0;} to {padding:0;} }
+
+  
+  <!-- Chinese readability improvements -->
+    article {font-weight: 400;letter-spacing: .01rem;}
+    article .entry{line-height:3;}
+  
+
+  
+    article .post-content-index .entry{max-height: 550px; overflow:hidden;}
+  
+</style>
+
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84649757-1', 'auto');
+  ga('send', 'pageview');
+ 
+</script>
+
+
+
+
+  
+    <!-- 360 Font and Baidu CDN in China -->
+    
+  <link href='//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  <script src="//libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+  
+
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="padding">
+	<div class="alignleft logo">
+	  <h1><a href="/">Sigularity-Jack X</a></h1>
+      <a href="https://travis-ci.org/stackOverMind/singularity"><img src="https://camo.githubusercontent.com/a469219c6d92527f999c0b0375b8b5160a47453b/68747470733a2f2f7472617669732d63692e6f72672f737461636b4f7665724d696e642f73696e67756c61726974792e7376673f6272616e63683d6d6173746572" alt="Build Status" data-canonical-src="https://travis-ci.org/stackOverMind/singularity.svg?branch=master" style="max-width:100%;"></a>
+	</div>
+	<nav id="main-nav" class="alignright">
+		<input type="checkbox" id="toggle" />
+		<label for="toggle" class="toggle" data-open="Main Menu" data-close="Close Menu" onclick><i class="fa fa-bars"></i></label>
+	  <ul class="menu">
+	    
+	      <li><a href="/">Home</a></li>
+	    
+	      <li><a href="/archives">Archives</a></li>
+	    
+	      <li><a href="/aboutme/">About</a></li>
+	    
+	    
+	  </ul>
+	</nav>
+	<div class="clearfix"></div>
+</div>
+</header>
+  <div id="page-heading-wrap">
+  	<div class="inner">
+      <div class="padding">
+    		
+          <h1>hexo 使用心得</h1>
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-10-17T21:13:17.000Z">2016-10-17</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+            <li>
+              <span class="heading-span">With: </span>
+              
+            </li>
+          </ul>
+        
+      </div>
+  	</div>
+  </div>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper" class="padding"><article class="post">
+  
+  
+    <div class="post-content">
+  
+      
+      <div class="entry">
+        
+          <h1 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h1><p>hexo 是一套强大而简单的博客系统，能够生成静态网页部署到任何容器中。而且有很多现成的theme可选，纯nodejs实现。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 全局安装hexo</div><div class="line">npm install -g hexo-cli </div><div class="line"># 建站</div><div class="line">hexo init &lt;forder&gt;</div><div class="line"># 新建一篇文章，在 source/_posts/目录下可以编辑这篇文章了</div><div class="line">hexo new post &lt;title&gt;</div><div class="line"># 生成静态网站</div><div class="line">hexo generate</div></pre></td></tr></table></figure>
+<p>详情移步<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">官方文档</a></p>
+<p>hexo 在本地玩6了之后我们就想找个地方部署起来，土豪的路子是到阿里云租个vps，然后装个nginx，不过现在是云服务的时代了，能轻则轻，仅仅为了搭建个博客买个阿里云有点太重，跟钱没啥关系。</p>
+<p>下面我介绍一个免费。。啊不对。。轻量级的解决方案：</p>
+<h1 id="hexo-结合-travis-CI，github-pages-做自动发布"><a href="#hexo-结合-travis-CI，github-pages-做自动发布" class="headerlink" title="hexo 结合 travis CI，github pages 做自动发布"></a>hexo 结合 travis CI，github pages 做自动发布</h1><a id="more"></a>
+<p>如果你要搭建一个个人博客，然而你想免费，那么这篇文章非常适合你，因为我要介绍一种永久免费的博客搭建方式，尤其适合程序员。因为用到的工具就是开发常用的工具</p>
+<p>这里用到两个神器：</p>
+<ul>
+<li><a href="https://pages.github.com/" target="_blank" rel="external">github pages</a>: 对于任何一个github用户或者组织，github都允许通过<code>&lt;your-name&gt;.github.io</code>这个域名访问你的以 <code>&lt;your-name&gt;.github.io</code> 命名的repo，所以你只需要新建一个 <code>&lt;your-name&gt;.github.io</code> 的repo就可以了，比如，我的叫做 <code>stackovermind.github.io</code>。</li>
+<li><a href="https://travis-ci.org/" target="_blank" rel="external">travis CI</a>: travis 本身是收费的商业服务，但是对于github上的开源项目永久免费，所以可以放心使用</li>
+</ul>
+<p>一般情况下如果我们使用hexo + github pages的方式搭建个人博客可以用以下的路径</p>
+<ol>
+<li>本地使用hexo生成静态文件(hexo generate)</li>
+<li>将静态文件目录拷贝出来并且提交到你的 github.io库，甚至hexo提供了配置方式，可以一键部署<code>hexo deploy</code></li>
+</ol>
+<p>但这要求你的pc上有node，有hexo。假如没有这些怎么办？假如在公共的电脑上，只有浏览器你将没有办法发布博客。travis CI这时候派上用场。整个流程变成这个样子：</p>
+<ol>
+<li>准备两个repo，一个是源码（任意起名字，我的叫做singularity别问为什么），另一个就是上面说的<code>&lt;your-name&gt;.github.io</code></li>
+<li>每次往源码库提交的时候自动触发travis 任务运行。</li>
+<li>travis 执行 <code>hexo generate</code> 和  <code>hexo deploy</code>的工作</li>
+<li>完成</li>
+</ol>
+<p>所以重点就是2-3两步如何配置</p>
+<h2 id="配置自动触发traivs运行"><a href="#配置自动触发traivs运行" class="headerlink" title="配置自动触发traivs运行"></a>配置自动触发traivs运行</h2><p>首先，你需要配置一个webhook,让每次提交都触发traivs CI　的执行。<br><a href="https://travis-ci.org/" target="_blank" rel="external">travis CI</a> 使用你的github账号登陆，你会看到自己的所有库，如果看不到就sync一下。在你的源码库上开启travis就可以。</p>
+<h2 id="配置travis执行脚本"><a href="#配置travis执行脚本" class="headerlink" title="配置travis执行脚本"></a>配置travis执行脚本</h2><p>现在每次更新travis都会自动运行。wait！运行什么? 你还没有告诉travis在什么环境下做什么事情呢！如何告诉呢？在你的项目最顶层增加一个.travis.yml 的文件。</p>
+<p>比如我的是这个样子的</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><div class="line"><span class="attr">language:</span> <span class="string">node_js</span></div><div class="line"><span class="attr">node_js:</span></div><div class="line"><span class="bullet">-</span> <span class="string">'6'</span></div><div class="line"><span class="bullet">-</span> <span class="string">'6.1'</span></div><div class="line"><span class="attr">branches:</span></div><div class="line"><span class="attr">  only:</span></div><div class="line"><span class="bullet">  -</span> <span class="string">master</span></div><div class="line"></div><div class="line"><span class="attr">cache:</span></div><div class="line"><span class="attr">  directories:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">node_modules</span></div><div class="line"><span class="attr">before_install:</span></div><div class="line"><span class="bullet">-</span> <span class="string">openssl</span> <span class="string">aes-256-cbc</span> <span class="bullet">-K</span> <span class="string">$encrypted_e69ed82d2201_key</span> <span class="bullet">-iv</span> <span class="string">$encrypted_e69ed82d2201_iv</span> <span class="bullet">-in</span> <span class="string">id_rsa.enc</span> <span class="bullet">-out</span> <span class="string">~/.ssh/id_rsa</span> <span class="bullet">-d</span></div><div class="line"><span class="bullet">-</span> <span class="string">chmod</span> <span class="number">600</span> <span class="string">~/.ssh/id_rsa</span></div><div class="line"><span class="bullet">-</span> <span class="string">eval</span> <span class="string">$(ssh-agent)</span></div><div class="line"><span class="bullet">-</span> <span class="string">ssh-add</span> <span class="string">~/.ssh/id_rsa</span></div><div class="line"><span class="bullet">-</span> <span class="string">cp</span> <span class="string">ssh_config</span> <span class="string">~/.ssh/config</span></div><div class="line"><span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="bullet">--global</span> <span class="string">user.name</span> <span class="string">'&lt;your-github-username&gt;'</span></div><div class="line"><span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="bullet">--global</span> <span class="string">user.email</span> <span class="string">'&lt;your-email&gt;'</span></div><div class="line"><span class="attr">install:</span></div><div class="line"><span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">hexo-cli</span> <span class="bullet">-g</span></div><div class="line"><span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span></div><div class="line"></div><div class="line"><span class="attr">script:</span> <span class="string">hexo</span> <span class="string">generate</span></div><div class="line"><span class="attr">after_success:</span></div><div class="line"><span class="bullet">-</span> <span class="string">hexo</span> <span class="string">deploy</span></div></pre></td></tr></table></figure>
+<p>其他不需要做过多解释，只是before　install做的事情需要多说一下，权限一节详细说。</p>
+<h2 id="配置hexo的deploy"><a href="#配置hexo的deploy" class="headerlink" title="配置hexo的deploy"></a>配置hexo的deploy</h2><p>travis 的执行脚本中要执行　hexo deploy,那么到底如何 deploy 呢？<br>编辑<code>_config.yml</code></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><div class="line"><span class="comment">#上面的都不重要,看下面的</span></div><div class="line"></div><div class="line"><span class="attr">deploy:</span></div><div class="line"><span class="attr">    type:</span> <span class="string">git</span></div><div class="line"><span class="attr">    repo:</span> <span class="string">git@github.com:stackOverMind/&lt;your-github-username&gt;.github.io.git</span></div></pre></td></tr></table></figure>
+<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><p>通过上面的配置，travis已经知道该怎么做了，剩下最后一个问题: 权限。<br>travis其实充当了一台linux pc的角色，在github看来是一个普通的客户端而已，这个时候你需要一个凭证让github相信你是你，然而又不能让其他人伪造这个凭证。</p>
+<p>在个人电脑上我们使用的是非对称加密的方式，用<code>ssh-keygen -t rsa</code> 生成一对非对称秘钥，其中私钥自己留着（放到 ~/.ssh/下），公钥交给github（复制粘贴到　项目-&gt;settings-&gt;deploy keys中）。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ ssh-keygen -t rsa -C <span class="string">"&lt;your-email&gt;"</span></div></pre></td></tr></table></figure>
+<p>得到 id_rsa.pub 和 id_rsa。将　id_rsa.pub 复制到　deploy keys</p>
+<p>在这里再啰嗦一下非对称加密是怎么回事</p>
+<ul>
+<li>经过公钥加密的内容只能通过私钥解密，反过来亦然</li>
+<li>公钥和私钥不同，即使拿到公钥也无法计算出私钥</li>
+</ul>
+<p>所以，只要私钥不泄露你就是安全的（不是很严密，不过暂时可以认为安全）</p>
+<p>这种方式在travis下就行不通了，因为travis充当了你的私有pc的角色，而github又是公开的，你不能直接把私钥裸着扔到github上，也不能通过网络接口写到travis的服务器上。所以我们需要再加密一次。</p>
+<p>travis 提供了命令行工具，但是在安装之前你需要gem，挺蛋疼的。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><div class="line">$ gem install travis</div><div class="line">$ travis login --auto</div><div class="line">$ travis encrypt-file id_rsa --add</div></pre></td></tr></table></figure>
+<p>你的<code>.travis.yml</code>中会增加跟<br>｀- openssl aes-256-cbc -K $encrypted_e69ed82d2201_key -iv $encrypted_e69ed82d2201_iv -in id_rsa.enc -out ~/.ssh/id_rsa -d｀　类似的一行。</p>
+<p>这时候在你的项目目录中生成了id_rsa.enc 把id_rsa删掉，不要提交到github上，把id_rsa.enc 提上去。<br>travis执行任务的时候会把这个　id_rsa.enc进行解密，还原成　id_rsa:<br><figure class="highlight yml"><table><tr><td class="code"><pre><div class="line"><span class="attr">before_install:</span></div><div class="line"><span class="bullet">-</span> <span class="string">openssl</span> <span class="string">aes-256-cbc</span> <span class="bullet">-K</span> <span class="string">$encrypted_e69ed82d2201_key</span> <span class="bullet">-iv</span> <span class="string">$encrypted_e69ed82d2201_iv</span> <span class="bullet">-in</span> <span class="string">id_rsa.enc</span> <span class="bullet">-out</span> <span class="string">~/.ssh/id_rsa</span> <span class="bullet">-d</span></div><div class="line"><span class="bullet">-</span> <span class="string">chmod</span> <span class="number">600</span> <span class="string">~/.ssh/id_rsa</span></div></pre></td></tr></table></figure></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>为了配置travis 使用ssh 访问github还需要建一个 ssh_config文件。<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">Host github.com</div><div class="line">    User git</div><div class="line">    StrictHostKeyChecking no</div><div class="line">    IdentityFile ~/.ssh/id_rsa</div><div class="line">    IdentitiesOnly yes</div></pre></td></tr></table></figure></p>
+<p>这个文件在travis任务执行中被复制到了~/.ssh/中，所以你看，都是套路，只要了解你在linux中怎么做，做成travis脚本就行了。</p>
+<p>可以参考这个配置文件<br><a href="https://github.com/stackOverMind/singularity" target="_blank" rel="external">https://github.com/stackOverMind/singularity</a></p>
+
+        
+      </div>
+      <footer>
+        
+          
+          
+  
+  <div class="tags">
+    <a href="/tags/hexo/">hexo</a>
+  </div>
+
+          <div class="share">
+  
+
+    
+
+    
+      <div class="g-plusone"></div>
+
+      <script type="text/javascript">
+        window.___gcfg = {lang: 'en-GB'};
+
+        (function() {
+          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+          po.src = 'https://apis.google.com/js/platform.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+      </script>
+    
+
+    
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="halfer53">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    
+    <div id ="sharewx" style="padding-top:20px;">
+    <div>扫码分享到微信</div>
+        
+        <script>
+            (function showQS(){
+                var url = 'http://pan.baidu.com/share/qrcode?w=150&h=150&url=' + encodeURIComponent(window.location.href);
+                var img = $('<img>');
+                img.attr('src',url);
+                $('#sharewx').append(img);       
+            })()
+        </script>
+    </div>
+  
+</div>
+          
+<nav class="article-nav clearfix">
+ 
+ <div class="article-prev" >
+ <a href="/2016/10/19/wilddog-weapp/" title="野狗与微信小程序结合">
+  <i class="fa fa-long-arrow-left"></i>
+  <span>
+  野狗与微信小程序结合</span>
+</a>
+</div>
+
+
+<div class="article-next">
+<a href="/2016/10/13/strict-mode-problem/"  title="记录一个JS严格模式遇到的问题">
+ <span>记录一个JS严格模式遇到的问题
+</span>
+<i class="fa fa-long-arrow-right"></i>
+</a>
+</div>
+
+</nav>
+
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+<section id="comment">
+
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright"><div class="padding">
+	
+	  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jack-x.engineer">
+  </form>
+</div>
+	
+	  
+<div class="widget recent-post">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2017/07/13/thinking-in-block-chain/">区块链技术思考</a>
+      </li>
+    
+      <li>
+        <a href="/2016/11/03/google-closure-anotations/">google closure compiler 中的 annotation</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/20/make-weapp-api-w3c/">记录将微信小程序的API适配到W3C标准</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/19/wilddog-weapp/">野狗与微信小程序结合</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/17/hexo-trick/">hexo 使用心得</a>
+      </li>
+    
+  </ul>
+</div>
+
+	
+	  
+	
+	  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  
+    <a href="/tags/google-closure-compiler/">google closure compiler<small>1</small></a>
+  
+    <a href="/tags/hexo/">hexo<small>1</small></a>
+  
+    <a href="/tags/javascript/">javascript<small>1</small></a>
+  
+    <a href="/tags/react-native/">react-native<small>0</small></a>
+  
+    <a href="/tags/前端/">前端<small>4</small></a>
+  
+    <a href="/tags/区块链，分布式/">区块链，分布式<small>1</small></a>
+  
+    <a href="/tags/实时化/">实时化<small>1</small></a>
+  
+    <a href="/tags/小程序/">小程序<small>0</small></a>
+  
+    <a href="/tags/微信/">微信<small>0</small></a>
+  
+    <a href="/tags/微信小程序/">微信小程序<small>1</small></a>
+  
+    <a href="/tags/野狗/">野狗<small>0</small></a>
+  
+</div>
+
+	
+</div></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="padding">
+	<div class="alignleft">
+	  
+	  &copy; 2017 Jack X
+	  
+	  Powerd by <a href="http://hexo.io/" target="_blank">hexo</a>
+	</div>
+
+	<div class="alignright">
+		
+		
+		
+		
+		
+		
+		
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<div class="scroll-top"><i class="fa fa-arrow-circle-up"></i></div></footer>
+  <!-- mathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<script type="text/javascript">
+$(window).scroll(function() {
+
+    if($(this).scrollTop() > 400) {
+        $('.scroll-top').fadeIn(200);
+    } else {
+        $('.scroll-top').fadeOut(200);
+    }
+});
+
+$('.scroll-top').bind('click', function(e) {
+    e.preventDefault();
+    $('body,html').animate({scrollTop:0},200);
+});
+</script>
+
+
+</body>
+</html>

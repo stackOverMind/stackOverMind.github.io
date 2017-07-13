@@ -1,0 +1,444 @@
+<!DOCTYPE HTML>
+
+    <html lang="zh-Hans">
+  
+<head>
+  <meta charset="utf-8">
+  
+  <title>web实时化（iweb ppt内容） | Sigularity-Jack X</title>
+  <meta name="author" content="Jack X">
+  
+  <meta name="description" content="本来说好的周日更新，但一直没时间。周一又是一周最忙的一天，所以长话短说，尽量简单阐述观点
+以下正文：
+非实时的webword wide web (以下简称web)是1989年 由 TimBL在 CERN发明的。web现在已经是一个内容平台，应用平台。但是想要了解web为什么是现在的这种工作机制就必须回到本源，web其实只是被设计成为一个信息管理系统(information management system)。因为是一个信息关系系统，所以文档才是核心，所以dom里面最重要的对象之一是ducument。如果不回顾历史，新一代的开发者不会明白为什么这个对象叫做document 而不是 app 或者 canvas，或者 world。
+最初的web也只保留与信息管理相关的功能，只有HTML，内容按照标题&amp;lt;title&amp;gt; 段落&amp;lt;p&amp;gt; 等标签组织起来，那个时候css还没有出现（CSS和JS出现在1995年前后，由网景公司引进），样式是靠html标签来控制的。
+对于一个信息管理系统而言，不需要持续的交互，只需要一次性下载文档就可以，所以http协议的特点是：
+
+单向访问，只支持客户端主动访问服务端，而服务端不能把消息主动推送给客户端
+无连接，一次请求就建立一个连接，一次连接只服务一个请求
+无状态，连接本身不带有上下文信息，服务端也不保存
+
+
+对于历史的部分感兴趣的话可以wikipedia: https://en.wikipedia.org/wiki/Tim_Berners-Lee
+
+需求催生新技术的产生，一直如此，人们需要更好的排版，CSS产生。需要更好的交互，JS产生…
+可以说web一直在进化，我个人总结一张图">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="web实时化（iweb ppt内容）"/>
+  <meta property="og:site_name" content="Sigularity-Jack X"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <meta http-equiv="Content-Language" content="zh-Hans"/>
+  
+
+  <link href="/img/favicon.png" rel="icon">
+  
+    <link rel="apple-touch-icon" href="/img/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-icon.png">
+    
+
+  <link rel="alternate" href="/atom.xml" title="Sigularity-Jack X" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <style type="text/css">
+  /* Tim Pietrusky advanced checkbox hack (Android <= 4.1.2) */
+body{ -webkit-animation: bugfix infinite 1s; }
+@-webkit-keyframes bugfix { from {padding:0;} to {padding:0;} }
+
+  
+  <!-- Chinese readability improvements -->
+    article {font-weight: 400;letter-spacing: .01rem;}
+    article .entry{line-height:3;}
+  
+
+  
+    article .post-content-index .entry{max-height: 550px; overflow:hidden;}
+  
+</style>
+
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84649757-1', 'auto');
+  ga('send', 'pageview');
+ 
+</script>
+
+
+
+
+  
+    <!-- 360 Font and Baidu CDN in China -->
+    
+  <link href='//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  <script src="//libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+  
+
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="padding">
+	<div class="alignleft logo">
+	  <h1><a href="/">Sigularity-Jack X</a></h1>
+      <a href="https://travis-ci.org/stackOverMind/singularity"><img src="https://camo.githubusercontent.com/a469219c6d92527f999c0b0375b8b5160a47453b/68747470733a2f2f7472617669732d63692e6f72672f737461636b4f7665724d696e642f73696e67756c61726974792e7376673f6272616e63683d6d6173746572" alt="Build Status" data-canonical-src="https://travis-ci.org/stackOverMind/singularity.svg?branch=master" style="max-width:100%;"></a>
+	</div>
+	<nav id="main-nav" class="alignright">
+		<input type="checkbox" id="toggle" />
+		<label for="toggle" class="toggle" data-open="Main Menu" data-close="Close Menu" onclick><i class="fa fa-bars"></i></label>
+	  <ul class="menu">
+	    
+	      <li><a href="/">Home</a></li>
+	    
+	      <li><a href="/archives">Archives</a></li>
+	    
+	      <li><a href="/aboutme/">About</a></li>
+	    
+	    
+	  </ul>
+	</nav>
+	<div class="clearfix"></div>
+</div>
+</header>
+  <div id="page-heading-wrap">
+  	<div class="inner">
+      <div class="padding">
+    		
+          <h1>web实时化（iweb ppt内容）</h1>
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-09-24T00:16:13.000Z">2016-09-24</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+            <li>
+              <span class="heading-span">With: </span>
+              
+            </li>
+          </ul>
+        
+      </div>
+  	</div>
+  </div>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper" class="padding"><article class="post">
+  
+  
+    <div class="post-content">
+  
+      
+      <div class="entry">
+        
+          <p>本来说好的周日更新，但一直没时间。周一又是一周最忙的一天，所以长话短说，尽量简单阐述观点</p>
+<p>以下正文：</p>
+<h1 id="非实时的web"><a href="#非实时的web" class="headerlink" title="非实时的web"></a>非实时的web</h1><p><code>word wide web</code> (以下简称web)是1989年 由 TimBL在 <a href="https://en.wikipedia.org/wiki/CERN" target="_blank" rel="external">CERN</a>发明的。web现在已经是一个内容平台，应用平台。但是想要了解web为什么是现在的这种工作机制就必须回到本源，web其实只是被设计成为一个信息管理系统(information management system)。因为是一个信息关系系统，所以文档才是核心，所以dom里面最重要的对象之一是<code>ducument</code>。如果不回顾历史，新一代的开发者不会明白为什么这个对象叫做<code>document</code> 而不是 <code>app</code> 或者 <code>canvas</code>，或者 <code>world</code>。</p>
+<p>最初的web也只保留与信息管理相关的功能，只有HTML，内容按照标题<code>&lt;title&gt;</code> 段落<code>&lt;p&gt;</code> 等标签组织起来，那个时候css还没有出现（CSS和JS出现在1995年前后，由网景公司引进），样式是靠html标签来控制的。</p>
+<p>对于一个信息管理系统而言，不需要持续的交互，只需要一次性下载文档就可以，所以http协议的特点是：</p>
+<ul>
+<li>单向访问，只支持客户端主动访问服务端，而服务端不能把消息主动推送给客户端</li>
+<li>无连接，一次请求就建立一个连接，一次连接只服务一个请求</li>
+<li>无状态，连接本身不带有上下文信息，服务端也不保存</li>
+</ul>
+<blockquote>
+<p>对于历史的部分感兴趣的话可以wikipedia: <a href="https://en.wikipedia.org/wiki/Tim_Berners-Lee" target="_blank" rel="external">https://en.wikipedia.org/wiki/Tim_Berners-Lee</a></p>
+</blockquote>
+<p>需求催生新技术的产生，一直如此，人们需要更好的排版，CSS产生。需要更好的交互，JS产生…</p>
+<p>可以说web一直在进化，我个人总结一张图</p>
+<p><img src="/img/ppt-realtime-2.png" alt=""><br><a id="more"></a><br>最开始的时候，web是完全静态的，内容使用链接组织在一起，同样的请求在任何时候都产生同样的内容，代表技术是HTML和HTTP。产品形态是门户网站</p>
+<p>后来出现动态网页技术，使得相同的URL根据不同的上下文信息（参数，cookie等）产生不同的内容成为可能，代表技术是（Jsp，Php 等动态网页技术），这种能力让搜索引擎成为可能。</p>
+<p>Ajax的出现很重要，document的内容可以被替换了，前后端的交互摆脱了 document -&gt; http request -&gt; new document 的单一模式。社交网络在这一历史条件下产生。</p>
+<p>现在是HTML5的时代，HTML5 = Web APP。HTML5并不是HTML的简单升级，其重要意义在于重新定义了Web和浏览器。Web就是应用，浏览器就是应用平台（或叫做操作系统都可以）。HTML5是一系列新技术，包括语义化，CSS3，设备访问能力，存储能力等等。但我认为最重要的一点是连接能力。WebSocket 让浏览器与后端直接双向长连。所谓风水轮流转，以前被B/S模式战胜的C/S模式借着浏览器的东风又回来了。</p>
+<p>总结一下这段历史，有两条线索非常明显</p>
+<ul>
+<li>web的发展是从后端到前端的</li>
+<li>web的发展是从静态到实时的</li>
+</ul>
+<h1 id="从后端到前端与后端云服务化"><a href="#从后端到前端与后端云服务化" class="headerlink" title="从后端到前端与后端云服务化"></a>从后端到前端与后端云服务化</h1><p><img src="/img/ppt-realtime-3.png" alt=""></p>
+<p>先看第一个线索，从后端到前端。</p>
+<p>当初,浏览器不够强大，尽管有标准化组织，但是浏览器的世界依然非常ugly，ie又非常buggy。人们在前端使用新技术是谨慎的，那个时候能够在后端做的事情一定不在前端做，后端可控，但前端不可控。</p>
+<p>后端做了从数据到页面路由，到渲染一系列的工作，而前端只做页面展示相关的一点点逻辑。那个时候MVC是个后端概念，模板引擎也只是应用在后端。输出到前端的时候是 data 与view 打包好的完整html。</p>
+<p>现在，已经越来越多的企业和开发者重视到了前后端分离：</p>
+<ul>
+<li>后端只提供数据，不接触任何html或模板。</li>
+<li>剩下的所有事情都交给前端去做。</li>
+</ul>
+<p>这样做的好处显而易见，从工程上，前端开发页面直接打包后扔到cdn，而不需要像以前一样交给后端套页面。</p>
+<p>另外，这是一个更合理的架构，把静态资源与动态内容区分，静态资源可以走更便宜的cdn流量，动态内容走更贵的自建机房或vps流量。动态的越少越好，把静态内容和动态内容糅合在一起产生的是更多的动态内容。</p>
+<p>另外，我们注意到一件是：前端的计算能力其实是过剩的，为何不多加利用？把这些本来由服务端做的事情交给前端去做，甚至你可以把大多数业务相关的逻辑放到前端去做。</p>
+<h2 id="What-Next"><a href="#What-Next" class="headerlink" title="What Next?"></a>What Next?</h2><p>当后端变得越来越薄，越来越业务无关，我们就可以把后端抽象出来，抽象成云服务。最终你会发现，后端就是一个数据库 + 加权限系统。</p>
+<p>这就是我说的后端云服务化。</p>
+<h1 id="WebSocket-与实时web"><a href="#WebSocket-与实时web" class="headerlink" title="WebSocket 与实时web"></a>WebSocket 与实时web</h1><p>再看第二个线索，从静态到实时。</p>
+<p><img src="/img/ppt-realtime-4.png" alt=""></p>
+<p>最初，前后端交互只能依赖于文档的切换这一种单一的模式，后来出现了一种新技术 <code>XmlHttpRequest</code> 也就是 <code>Ajax</code>。<code>Ajax</code> 让我们在不切换document就可以更新内容。</p>
+<p>因为实时一直是强需求，聪明的开发者想到可以利用 <code>Ajax</code>的特性来模拟实时。就是定期发送请求，到服务端拉取最新的数据。但polling的方式只能做到准实时，而且实时性与性能要做trade off。这也是为何实时需求如此强烈，但真正实现实时的web厂商如此之少。使用Ajax 模拟实时是一条看起来很美但是走不通的路。</p>
+<p><code>websocket</code>的出现解决了最重要的难题–性能。无论是延迟性，还是吞吐量，websocket相比传统的polling方式性能提升都是革命性的。</p>
+<p><img src="http://websocket.org/img/poll-ws-compare.gif" alt=""></p>
+<p>一般情况下几百倍的性能提升是很easy的。为什么websocket的性能如此强劲要从原理说起。</p>
+<p>websocket 在传输的时候并不依赖http，只有在建立连接握手的时候使用http，这就是关键所在。</p>
+<p><img src="/img/ppt-realtime-5.png" alt=""></p>
+<p>websocket是二进制协议，协议头只有几个byte大小，其他的都是payload！ 而http协议是文本协议，协议头动辄上k。再加上重复建立连接，几千倍的性能提升都是有可能的。</p>
+<h2 id="What-next？"><a href="#What-next？" class="headerlink" title="What next？"></a>What next？</h2><p><img src="/img/ppt-realtime-6.png" alt=""></p>
+<p>有了Websocket这把神器，我们要好好利用。当静态资源都被cdn缓存，动态内容何去何从？通过大量的http请求后端不如在前后端之间搭建一个websocket连接，当前后端之间必然要建立一个websocket的时候，你会发现常规的http请求似乎都没有存在的必要，通过websocket来发送岂不是更好？所有的动态数据都走同一个连接才是最优化的方式。</p>
+<p>所以，websocket才是实现实时web的正确技术。</p>
+<h1 id="同步模式优于-pub-sub-模式"><a href="#同步模式优于-pub-sub-模式" class="headerlink" title="同步模式优于 pub/sub 模式"></a>同步模式优于 pub/sub 模式</h1><p><img src="/img/ppt-realtime-7.png" alt=""></p>
+<p>pub/sub模式是非常容易理解模式。</p>
+<p><img src="/img/ppt-realtime-8.png" alt=""></p>
+<p>同步模式的底层也使用pub/sub模式，上层构建客户端数据库，客户端数据库与服务端数据库实时同步，保持状态一致。同步模式的精髓在于客户端有存储，这样非常适合在弱网或没有网络的情况下使用。在网络弱的情况下。对于开发者来说，同步模式简化了开发者的心智模型，只需要关注本地数据库，而不需要关心服务端状态以及其他端的状态。</p>
+<p>这次分享的四个观点:</p>
+<ul>
+<li>实时是普遍需求</li>
+<li>后端可以被云服务化</li>
+<li>websocket优于http</li>
+<li>同步模式优于pub/sub</li>
+</ul>
+<p>而野狗就是使用websocket做连接，使用同步机制做交互，解决用户实时需求的实时后端云服务。</p>
+
+        
+      </div>
+      <footer>
+        
+          
+          
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>, <a href="/tags/实时化/">实时化</a>
+  </div>
+
+          <div class="share">
+  
+
+    
+
+    
+      <div class="g-plusone"></div>
+
+      <script type="text/javascript">
+        window.___gcfg = {lang: 'en-GB'};
+
+        (function() {
+          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+          po.src = 'https://apis.google.com/js/platform.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+      </script>
+    
+
+    
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="halfer53">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    
+    <div id ="sharewx" style="padding-top:20px;">
+    <div>扫码分享到微信</div>
+        
+        <script>
+            (function showQS(){
+                var url = 'http://pan.baidu.com/share/qrcode?w=150&h=150&url=' + encodeURIComponent(window.location.href);
+                var img = $('<img>');
+                img.attr('src',url);
+                $('#sharewx').append(img);       
+            })()
+        </script>
+    </div>
+  
+</div>
+          
+<nav class="article-nav clearfix">
+ 
+ <div class="article-prev" >
+ <a href="/2016/10/03/test/" title="test">
+  <i class="fa fa-long-arrow-left"></i>
+  <span>
+  test</span>
+</a>
+</div>
+
+
+<div class="article-next">
+<a href="/2016/09/23/small-program/"  title="闲话前端和微信小程序">
+ <span>闲话前端和微信小程序
+</span>
+<i class="fa fa-long-arrow-right"></i>
+</a>
+</div>
+
+</nav>
+
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+<section id="comment">
+
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright"><div class="padding">
+	
+	  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jack-x.engineer">
+  </form>
+</div>
+	
+	  
+<div class="widget recent-post">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2017/07/13/thinking-in-block-chain/">区块链技术思考</a>
+      </li>
+    
+      <li>
+        <a href="/2016/11/03/google-closure-anotations/">google closure compiler 中的 annotation</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/20/make-weapp-api-w3c/">记录将微信小程序的API适配到W3C标准</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/19/wilddog-weapp/">野狗与微信小程序结合</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/17/hexo-trick/">hexo 使用心得</a>
+      </li>
+    
+  </ul>
+</div>
+
+	
+	  
+	
+	  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  
+    <a href="/tags/google-closure-compiler/">google closure compiler<small>1</small></a>
+  
+    <a href="/tags/hexo/">hexo<small>1</small></a>
+  
+    <a href="/tags/javascript/">javascript<small>1</small></a>
+  
+    <a href="/tags/react-native/">react-native<small>0</small></a>
+  
+    <a href="/tags/前端/">前端<small>4</small></a>
+  
+    <a href="/tags/区块链，分布式/">区块链，分布式<small>1</small></a>
+  
+    <a href="/tags/实时化/">实时化<small>1</small></a>
+  
+    <a href="/tags/小程序/">小程序<small>0</small></a>
+  
+    <a href="/tags/微信/">微信<small>0</small></a>
+  
+    <a href="/tags/微信小程序/">微信小程序<small>1</small></a>
+  
+    <a href="/tags/野狗/">野狗<small>0</small></a>
+  
+</div>
+
+	
+</div></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="padding">
+	<div class="alignleft">
+	  
+	  &copy; 2017 Jack X
+	  
+	  Powerd by <a href="http://hexo.io/" target="_blank">hexo</a>
+	</div>
+
+	<div class="alignright">
+		
+		
+		
+		
+		
+		
+		
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<div class="scroll-top"><i class="fa fa-arrow-circle-up"></i></div></footer>
+  <!-- mathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<script type="text/javascript">
+$(window).scroll(function() {
+
+    if($(this).scrollTop() > 400) {
+        $('.scroll-top').fadeIn(200);
+    } else {
+        $('.scroll-top').fadeOut(200);
+    }
+});
+
+$('.scroll-top').bind('click', function(e) {
+    e.preventDefault();
+    $('body,html').animate({scrollTop:0},200);
+});
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE HTML>
+
+    <html lang="zh-Hans">
+  
+<head>
+  <meta charset="utf-8">
+  
+  <title>记录一个JS严格模式遇到的问题 | Sigularity-Jack X</title>
+  <meta name="author" content="Jack X">
+  
+  <meta name="description" content="场景为微信小程序定制engine.io
+描述(function()&amp;#123;return this&amp;#125;)()
+engine.io 使用webpack + babel 编译，其中一些依赖模块的写法并没有考虑 use strict 的情况。上述代码在use strict 的情况下返回undefined 而不是全局对象。而webpack中使用 babel却自动在每个模块上自动添加use strict 。导致一些奇怪现象的发生。
+经过测试，在微信小程序中，默认是启用strict 模式的，而webpack并没有解决这个问题，简直 pain in the ass，先保留这个问题，留在以后解决。
+update 20161017问题是由
+...function(global)&amp;#123;//your code&amp;#125;(exports,function()&amp;#123;return this&amp;#125;())...
+代码快引起，所以一个思路是去掉这个闭包">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="记录一个JS严格模式遇到的问题"/>
+  <meta property="og:site_name" content="Sigularity-Jack X"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <meta http-equiv="Content-Language" content="zh-Hans"/>
+  
+
+  <link href="/img/favicon.png" rel="icon">
+  
+    <link rel="apple-touch-icon" href="/img/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-icon.png">
+    
+
+  <link rel="alternate" href="/atom.xml" title="Sigularity-Jack X" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <style type="text/css">
+  /* Tim Pietrusky advanced checkbox hack (Android <= 4.1.2) */
+body{ -webkit-animation: bugfix infinite 1s; }
+@-webkit-keyframes bugfix { from {padding:0;} to {padding:0;} }
+
+  
+  <!-- Chinese readability improvements -->
+    article {font-weight: 400;letter-spacing: .01rem;}
+    article .entry{line-height:3;}
+  
+
+  
+    article .post-content-index .entry{max-height: 550px; overflow:hidden;}
+  
+</style>
+
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84649757-1', 'auto');
+  ga('send', 'pageview');
+ 
+</script>
+
+
+
+
+  
+    <!-- 360 Font and Baidu CDN in China -->
+    
+  <link href='//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  <script src="//libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+  
+
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="padding">
+	<div class="alignleft logo">
+	  <h1><a href="/">Sigularity-Jack X</a></h1>
+      <a href="https://travis-ci.org/stackOverMind/singularity"><img src="https://camo.githubusercontent.com/a469219c6d92527f999c0b0375b8b5160a47453b/68747470733a2f2f7472617669732d63692e6f72672f737461636b4f7665724d696e642f73696e67756c61726974792e7376673f6272616e63683d6d6173746572" alt="Build Status" data-canonical-src="https://travis-ci.org/stackOverMind/singularity.svg?branch=master" style="max-width:100%;"></a>
+	</div>
+	<nav id="main-nav" class="alignright">
+		<input type="checkbox" id="toggle" />
+		<label for="toggle" class="toggle" data-open="Main Menu" data-close="Close Menu" onclick><i class="fa fa-bars"></i></label>
+	  <ul class="menu">
+	    
+	      <li><a href="/">Home</a></li>
+	    
+	      <li><a href="/archives">Archives</a></li>
+	    
+	      <li><a href="/aboutme/">About</a></li>
+	    
+	    
+	  </ul>
+	</nav>
+	<div class="clearfix"></div>
+</div>
+</header>
+  <div id="page-heading-wrap">
+  	<div class="inner">
+      <div class="padding">
+    		
+          <h1>记录一个JS严格模式遇到的问题</h1>
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-10-13T15:43:32.000Z">2016-10-13</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+            <li>
+              <span class="heading-span">With: </span>
+              
+            </li>
+          </ul>
+        
+      </div>
+  	</div>
+  </div>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper" class="padding"><article class="post">
+  
+  
+    <div class="post-content">
+  
+      
+      <div class="entry">
+        
+          <h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>为微信小程序定制engine.io</p>
+<h1 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h1><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> <span class="keyword">this</span>&#125;)()</div></pre></td></tr></table></figure>
+<p>engine.io 使用webpack + babel 编译，其中一些依赖模块的写法并没有考虑 <code>use strict</code> 的情况。<br>上述代码在<code>use strict</code> 的情况下返回<code>undefined</code> 而不是全局对象。而webpack中使用 babel却自动在每个模块上自动添加<code>use strict</code> 。导致一些奇怪现象的发生。</p>
+<p>经过测试，在微信小程序中，默认是启用strict 模式的，而webpack并没有解决这个问题，简直 pain in the ass，先保留这个问题，留在以后解决。</p>
+<h1 id="update-20161017"><a href="#update-20161017" class="headerlink" title="update 20161017"></a>update 20161017</h1><p>问题是由</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">...</div><div class="line">function(global)&#123;</div><div class="line"><span class="comment">//your code</span></div><div class="line">&#125;(exports,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> <span class="keyword">this</span>&#125;())</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
+<p>代码快引起，所以一个思路是去掉这个闭包<br><a id="more"></a><br>webpack 提供了 node.global 选项，如果把这个选项关闭的话webpack 将不再提供 global对象的闭包。也就是说直接暴露目标环境的global对象给程序。之前我的理解有偏差，要给global一个特殊的变量。实际上global是标准内置的。所以理论上可以在任何环境中使用global对象。</p>
+<blockquote>
+<p>参考: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects</a> Standard built-in objects<br>The term “global objects” (or standard built-in objects) here is not to be confused with the global object. Here, global objects refer to objects in the global scope (but only if ECMAScript 5 strict mode is not used; in that case it returns undefined). The global object itself can be accessed using the this operator in the global scope. In fact, the global scope consists of the properties of the global object, including inherited properties, if any.</p>
+</blockquote>
+<p>所以我把webpack的配置文件做一下修改<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">node:&#123;</div><div class="line">  global:false//默认为true，</div><div class="line">&#125;,</div></pre></td></tr></table></figure></p>
+<p>加上这个选项后webpack就不会在生成的代码中加入这个恼人的闭包了。</p>
+<h1 id="NEXT-webpack为什么默认给一个闭包？"><a href="#NEXT-webpack为什么默认给一个闭包？" class="headerlink" title="NEXT webpack为什么默认给一个闭包？"></a>NEXT webpack为什么默认给一个闭包？</h1><p>TODO</p>
+
+        
+      </div>
+      <footer>
+        
+          
+          
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>, <a href="/tags/javascript/">javascript</a>
+  </div>
+
+          <div class="share">
+  
+
+    
+
+    
+      <div class="g-plusone"></div>
+
+      <script type="text/javascript">
+        window.___gcfg = {lang: 'en-GB'};
+
+        (function() {
+          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+          po.src = 'https://apis.google.com/js/platform.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+      </script>
+    
+
+    
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="halfer53">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    
+    <div id ="sharewx" style="padding-top:20px;">
+    <div>扫码分享到微信</div>
+        
+        <script>
+            (function showQS(){
+                var url = 'http://pan.baidu.com/share/qrcode?w=150&h=150&url=' + encodeURIComponent(window.location.href);
+                var img = $('<img>');
+                img.attr('src',url);
+                $('#sharewx').append(img);       
+            })()
+        </script>
+    </div>
+  
+</div>
+          
+<nav class="article-nav clearfix">
+ 
+ <div class="article-prev" >
+ <a href="/2016/10/17/hexo-trick/" title="hexo 使用心得">
+  <i class="fa fa-long-arrow-left"></i>
+  <span>
+  hexo 使用心得</span>
+</a>
+</div>
+
+
+<div class="article-next">
+<a href="/2016/10/03/test/"  title="test">
+ <span>test
+</span>
+<i class="fa fa-long-arrow-right"></i>
+</a>
+</div>
+
+</nav>
+
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+<section id="comment">
+
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright"><div class="padding">
+	
+	  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jack-x.engineer">
+  </form>
+</div>
+	
+	  
+<div class="widget recent-post">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2017/07/13/thinking-in-block-chain/">区块链技术思考</a>
+      </li>
+    
+      <li>
+        <a href="/2016/11/03/google-closure-anotations/">google closure compiler 中的 annotation</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/20/make-weapp-api-w3c/">记录将微信小程序的API适配到W3C标准</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/19/wilddog-weapp/">野狗与微信小程序结合</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/17/hexo-trick/">hexo 使用心得</a>
+      </li>
+    
+  </ul>
+</div>
+
+	
+	  
+	
+	  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  
+    <a href="/tags/google-closure-compiler/">google closure compiler<small>1</small></a>
+  
+    <a href="/tags/hexo/">hexo<small>1</small></a>
+  
+    <a href="/tags/javascript/">javascript<small>1</small></a>
+  
+    <a href="/tags/react-native/">react-native<small>0</small></a>
+  
+    <a href="/tags/前端/">前端<small>4</small></a>
+  
+    <a href="/tags/区块链，分布式/">区块链，分布式<small>1</small></a>
+  
+    <a href="/tags/实时化/">实时化<small>1</small></a>
+  
+    <a href="/tags/小程序/">小程序<small>0</small></a>
+  
+    <a href="/tags/微信/">微信<small>0</small></a>
+  
+    <a href="/tags/微信小程序/">微信小程序<small>1</small></a>
+  
+    <a href="/tags/野狗/">野狗<small>0</small></a>
+  
+</div>
+
+	
+</div></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="padding">
+	<div class="alignleft">
+	  
+	  &copy; 2017 Jack X
+	  
+	  Powerd by <a href="http://hexo.io/" target="_blank">hexo</a>
+	</div>
+
+	<div class="alignright">
+		
+		
+		
+		
+		
+		
+		
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<div class="scroll-top"><i class="fa fa-arrow-circle-up"></i></div></footer>
+  <!-- mathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<script type="text/javascript">
+$(window).scroll(function() {
+
+    if($(this).scrollTop() > 400) {
+        $('.scroll-top').fadeIn(200);
+    } else {
+        $('.scroll-top').fadeOut(200);
+    }
+});
+
+$('.scroll-top').bind('click', function(e) {
+    e.preventDefault();
+    $('body,html').animate({scrollTop:0},200);
+});
+</script>
+
+
+</body>
+</html>

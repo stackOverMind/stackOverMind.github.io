@@ -1,0 +1,374 @@
+<!DOCTYPE HTML>
+
+    <html lang="zh-Hans">
+  
+<head>
+  <meta charset="utf-8">
+  
+  <title>区块链技术思考 | Sigularity-Jack X</title>
+  <meta name="author" content="Jack X">
+  
+  <meta name="description" content="很长时间没有写作，博客快要荒废了（虽然本来就没几篇文章）。。
+这段时间研究了很多技术，涉及面非常广，包含深度学习，量子计算，分布式系统等等。有的了解了基本原理就放弃了，有的稍微深入一点。区块链技术属于前者。
+区块链技术其实是一种分布式系统。其最根本的问题还是解决一致性问题，整个区块链不能分裂。这跟一">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="区块链技术思考"/>
+  <meta property="og:site_name" content="Sigularity-Jack X"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <meta http-equiv="Content-Language" content="zh-Hans"/>
+  
+
+  <link href="/img/favicon.png" rel="icon">
+  
+    <link rel="apple-touch-icon" href="/img/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-icon.png">
+    
+
+  <link rel="alternate" href="/atom.xml" title="Sigularity-Jack X" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <style type="text/css">
+  /* Tim Pietrusky advanced checkbox hack (Android <= 4.1.2) */
+body{ -webkit-animation: bugfix infinite 1s; }
+@-webkit-keyframes bugfix { from {padding:0;} to {padding:0;} }
+
+  
+  <!-- Chinese readability improvements -->
+    article {font-weight: 400;letter-spacing: .01rem;}
+    article .entry{line-height:3;}
+  
+
+  
+    article .post-content-index .entry{max-height: 550px; overflow:hidden;}
+  
+</style>
+
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84649757-1', 'auto');
+  ga('send', 'pageview');
+ 
+</script>
+
+
+
+
+  
+    <!-- 360 Font and Baidu CDN in China -->
+    
+  <link href='//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  <script src="//libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+  
+
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="padding">
+	<div class="alignleft logo">
+	  <h1><a href="/">Sigularity-Jack X</a></h1>
+      <a href="https://travis-ci.org/stackOverMind/singularity"><img src="https://camo.githubusercontent.com/a469219c6d92527f999c0b0375b8b5160a47453b/68747470733a2f2f7472617669732d63692e6f72672f737461636b4f7665724d696e642f73696e67756c61726974792e7376673f6272616e63683d6d6173746572" alt="Build Status" data-canonical-src="https://travis-ci.org/stackOverMind/singularity.svg?branch=master" style="max-width:100%;"></a>
+	</div>
+	<nav id="main-nav" class="alignright">
+		<input type="checkbox" id="toggle" />
+		<label for="toggle" class="toggle" data-open="Main Menu" data-close="Close Menu" onclick><i class="fa fa-bars"></i></label>
+	  <ul class="menu">
+	    
+	      <li><a href="/">Home</a></li>
+	    
+	      <li><a href="/archives">Archives</a></li>
+	    
+	      <li><a href="/aboutme/">About</a></li>
+	    
+	    
+	  </ul>
+	</nav>
+	<div class="clearfix"></div>
+</div>
+</header>
+  <div id="page-heading-wrap">
+  	<div class="inner">
+      <div class="padding">
+    		
+          <h1>区块链技术思考</h1>
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2017-07-13T17:05:37.000Z">2017-07-13</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+            <li>
+              <span class="heading-span">With: </span>
+              
+            </li>
+          </ul>
+        
+      </div>
+  	</div>
+  </div>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper" class="padding"><article class="post">
+  
+  
+    <div class="post-content">
+  
+      
+      <div class="entry">
+        
+          <p>很长时间没有写作，博客快要荒废了（虽然本来就没几篇文章）。。</p>
+<p>这段时间研究了很多技术，涉及面非常广，包含深度学习，量子计算，分布式系统等等。有的了解了基本原理就放弃了，有的稍微深入一点。区块链技术属于前者。</p>
+<p>区块链技术其实是一种分布式系统。其最根本的问题还是解决一致性问题，整个区块链不能分裂。这跟一般分布式系统是一样的。一般的分布式系统使用 paxo 或 raft 来保证同一时间只能有一个master（leader），所有多系统的更改都由master 发起，从而保证整个系统的一致性。</p>
+<p>区块链也需要一个leader节点，但开放网络环境下节点实在太多了，大家都争这个leader权限是要打仗的，而且不知道要打多少轮才能决出胜者。为了解决这个问题，区块链引进了一个核心概念：工作量证明。简单的说就是谁NB谁当leader，光打嘴炮可不行，你得证明你NB。如何证明呢？算个hash吧。</p>
+<p>假如有一系列交易数据A B C,为了保证这些交易不被篡改，我们可以算一个hash</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">h0 = hash(A)</div><div class="line">h1 ＝ hash(B+h0)</div><div class="line">h2 = hash(C+h2)</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>这样就形成了一个链式结构，在这个链上任何一条数据做了修改，哪么整个链最后的hash都会发生变化，这一点确保其不可被修改。</p>
+<p>只是不被篡改，这个事情还没完，因为我们的问题还没有解答，如何选出leader？</p>
+<p>如果我们对h0,h1,h2 增加一点要求，要求其只能以 n个0开头，公式也做一点变化<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">h0=  hash(A|| Nonce0) </div><div class="line">h1 = hash(B || h0 || Nonce1)</div><div class="line">h2 = hash(C || h1 || Nonce2)</div></pre></td></tr></table></figure></p>
+<p>那么这个难度就增加了，而且通过h 来推导Nonce几乎是不可能的。所以只能通过硬算，不断尝试，去凑。这样谁运算的速度快 ＋ 一点运气，谁就能当leader。leader的作用就是记帐，所以争夺leader就是争夺记帐权。而比特币，或其他虚拟货币为了让这个机制work下去，会给leader一定的奖励，所以就有了挖矿这回事。挖矿就是去争做leader，争着记帐。</p>
+<p>因为要保证公平，所以这个leader是一次性的，比特币会调整难度值（就是要求计算出来的hash 由几个0开头）来保证始终差不多10分钟产生一个新的区块。这也就是一个交易要等10分钟才能被commit到区块链中的原因。</p>
+<p>基本原理到这里。</p>
+<p>区块链技术的优点所有人都知道。但任何技术都不是万能的，区块链也一样。区块链的工作量证明机制就是其最大的缺陷。为了确定一个记帐权限，需要大量的计算，而且计算量还会不断增加。其实这些计算量是没有任何意义的，不产生任何价值，也就是完全的浪费。</p>
+
+        
+      </div>
+      <footer>
+        
+          
+          
+  
+  <div class="tags">
+    <a href="/tags/区块链，分布式/">区块链，分布式</a>
+  </div>
+
+          <div class="share">
+  
+
+    
+
+    
+      <div class="g-plusone"></div>
+
+      <script type="text/javascript">
+        window.___gcfg = {lang: 'en-GB'};
+
+        (function() {
+          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+          po.src = 'https://apis.google.com/js/platform.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+      </script>
+    
+
+    
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="halfer53">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    
+    <div id ="sharewx" style="padding-top:20px;">
+    <div>扫码分享到微信</div>
+        
+        <script>
+            (function showQS(){
+                var url = 'http://pan.baidu.com/share/qrcode?w=150&h=150&url=' + encodeURIComponent(window.location.href);
+                var img = $('<img>');
+                img.attr('src',url);
+                $('#sharewx').append(img);       
+            })()
+        </script>
+    </div>
+  
+</div>
+          
+<nav class="article-nav clearfix">
+ 
+
+<div class="article-next">
+<a href="/2016/11/03/google-closure-anotations/"  title="google closure compiler 中的 annotation">
+ <span>google closure compiler 中的 annotation
+</span>
+<i class="fa fa-long-arrow-right"></i>
+</a>
+</div>
+
+</nav>
+
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+<section id="comment">
+
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright"><div class="padding">
+	
+	  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jack-x.engineer">
+  </form>
+</div>
+	
+	  
+<div class="widget recent-post">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2017/07/13/thinking-in-block-chain/">区块链技术思考</a>
+      </li>
+    
+      <li>
+        <a href="/2016/11/03/google-closure-anotations/">google closure compiler 中的 annotation</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/20/make-weapp-api-w3c/">记录将微信小程序的API适配到W3C标准</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/19/wilddog-weapp/">野狗与微信小程序结合</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/17/hexo-trick/">hexo 使用心得</a>
+      </li>
+    
+  </ul>
+</div>
+
+	
+	  
+	
+	  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  
+    <a href="/tags/google-closure-compiler/">google closure compiler<small>1</small></a>
+  
+    <a href="/tags/hexo/">hexo<small>1</small></a>
+  
+    <a href="/tags/javascript/">javascript<small>1</small></a>
+  
+    <a href="/tags/react-native/">react-native<small>0</small></a>
+  
+    <a href="/tags/前端/">前端<small>4</small></a>
+  
+    <a href="/tags/区块链，分布式/">区块链，分布式<small>1</small></a>
+  
+    <a href="/tags/实时化/">实时化<small>1</small></a>
+  
+    <a href="/tags/小程序/">小程序<small>0</small></a>
+  
+    <a href="/tags/微信/">微信<small>0</small></a>
+  
+    <a href="/tags/微信小程序/">微信小程序<small>1</small></a>
+  
+    <a href="/tags/野狗/">野狗<small>0</small></a>
+  
+</div>
+
+	
+</div></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="padding">
+	<div class="alignleft">
+	  
+	  &copy; 2017 Jack X
+	  
+	  Powerd by <a href="http://hexo.io/" target="_blank">hexo</a>
+	</div>
+
+	<div class="alignright">
+		
+		
+		
+		
+		
+		
+		
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<div class="scroll-top"><i class="fa fa-arrow-circle-up"></i></div></footer>
+  <!-- mathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<script type="text/javascript">
+$(window).scroll(function() {
+
+    if($(this).scrollTop() > 400) {
+        $('.scroll-top').fadeIn(200);
+    } else {
+        $('.scroll-top').fadeOut(200);
+    }
+});
+
+$('.scroll-top').bind('click', function(e) {
+    e.preventDefault();
+    $('body,html').animate({scrollTop:0},200);
+});
+</script>
+
+
+</body>
+</html>

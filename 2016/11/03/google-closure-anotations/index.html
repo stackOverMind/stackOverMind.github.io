@@ -1,0 +1,480 @@
+<!DOCTYPE HTML>
+
+    <html lang="zh-Hans">
+  
+<head>
+  <meta charset="utf-8">
+  
+  <title>google closure compiler 中的 annotation | Sigularity-Jack X</title>
+  <meta name="author" content="Jack X">
+  
+  <meta name="description" content="因为经常要用到 google closure compiler 中的 annotation,所以索性把https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler 翻译出来。
+虽然google closure compiler 用的人一直不多，但对于一些需要高压缩比的js项目来说还是无可取代的。翻译出来，或许能够对别人有所帮助。
+Closure Compiler 可以利用Js变量的类型信息来增强优化。然而JS中没有类型。因为JS中没有类型的概念，所以你必须使用注释来标注数据的类型。
+Closure Compiler使用 JSdoc中使用的annotation。这篇文档描述了ClosureCompiler能够认识的annotation
+JSdoc 标签Closure Compiler（以下称为编译器） 在 JSdoc 标签中寻找有用的类型信息。使用下面的标签可以帮助 Closure Compiler 优化你的代码，检查可能的类型错误和其他问题。
+以下仅仅包含能够影响Closure Compiler 行为的JsDoc 标签。
+@const @const {type}标记一个变量只读，compiler会把@const 变量做inline 处理，从而优化js执行效率
+type 声明是可选的。
+如果@const 变量赋值超过1次，编译器会产生一条警告信息。如果变量是个对象，编译器不会禁止内部属性的变化。
+** @const */ var MY_BEER = &#39;stout&#39;;/** * My namespace&#39;s favorite kind of beer. * @const &amp;#123;string&amp;#125; */mynamespace.MY_BEER = &#39;stout&#39;;">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="google closure compiler 中的 annotation"/>
+  <meta property="og:site_name" content="Sigularity-Jack X"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <meta http-equiv="Content-Language" content="zh-Hans"/>
+  
+
+  <link href="/img/favicon.png" rel="icon">
+  
+    <link rel="apple-touch-icon" href="/img/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-icon.png">
+    
+
+  <link rel="alternate" href="/atom.xml" title="Sigularity-Jack X" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <style type="text/css">
+  /* Tim Pietrusky advanced checkbox hack (Android <= 4.1.2) */
+body{ -webkit-animation: bugfix infinite 1s; }
+@-webkit-keyframes bugfix { from {padding:0;} to {padding:0;} }
+
+  
+  <!-- Chinese readability improvements -->
+    article {font-weight: 400;letter-spacing: .01rem;}
+    article .entry{line-height:3;}
+  
+
+  
+    article .post-content-index .entry{max-height: 550px; overflow:hidden;}
+  
+</style>
+
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84649757-1', 'auto');
+  ga('send', 'pageview');
+ 
+</script>
+
+
+
+
+  
+    <!-- 360 Font and Baidu CDN in China -->
+    
+  <link href='//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  <script src="//libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+  
+
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="padding">
+	<div class="alignleft logo">
+	  <h1><a href="/">Sigularity-Jack X</a></h1>
+      <a href="https://travis-ci.org/stackOverMind/singularity"><img src="https://camo.githubusercontent.com/a469219c6d92527f999c0b0375b8b5160a47453b/68747470733a2f2f7472617669732d63692e6f72672f737461636b4f7665724d696e642f73696e67756c61726974792e7376673f6272616e63683d6d6173746572" alt="Build Status" data-canonical-src="https://travis-ci.org/stackOverMind/singularity.svg?branch=master" style="max-width:100%;"></a>
+	</div>
+	<nav id="main-nav" class="alignright">
+		<input type="checkbox" id="toggle" />
+		<label for="toggle" class="toggle" data-open="Main Menu" data-close="Close Menu" onclick><i class="fa fa-bars"></i></label>
+	  <ul class="menu">
+	    
+	      <li><a href="/">Home</a></li>
+	    
+	      <li><a href="/archives">Archives</a></li>
+	    
+	      <li><a href="/aboutme/">About</a></li>
+	    
+	    
+	  </ul>
+	</nav>
+	<div class="clearfix"></div>
+</div>
+</header>
+  <div id="page-heading-wrap">
+  	<div class="inner">
+      <div class="padding">
+    		
+          <h1>google closure compiler 中的 annotation</h1>
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-11-03T16:25:16.000Z">2016-11-03</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+            <li>
+              <span class="heading-span">With: </span>
+              
+            </li>
+          </ul>
+        
+      </div>
+  	</div>
+  </div>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper" class="padding"><article class="post">
+  
+  
+    <div class="post-content">
+  
+      
+      <div class="entry">
+        
+          <p>因为经常要用到 google closure compiler 中的 annotation,所以索性把<a href="https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler" target="_blank" rel="external">https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler</a> 翻译出来。</p>
+<p>虽然google closure compiler 用的人一直不多，但对于一些需要高压缩比的js项目来说还是无可取代的。翻译出来，或许能够对别人有所帮助。</p>
+<p><code>Closure Compiler</code> 可以利用Js变量的类型信息来增强优化。然而JS中没有类型。因为JS中没有类型的概念，所以你必须使用注释来标注数据的类型。</p>
+<p><code>Closure Compiler</code>使用 JSdoc中使用的annotation。这篇文档描述了ClosureCompiler能够认识的annotation</p>
+<h1 id="JSdoc-标签"><a href="#JSdoc-标签" class="headerlink" title="JSdoc 标签"></a>JSdoc 标签</h1><p>Closure Compiler（以下称为编译器） 在 JSdoc 标签中寻找有用的类型信息。使用下面的标签可以帮助 Closure Compiler 优化你的代码，检查可能的类型错误和其他问题。</p>
+<p>以下仅仅包含能够影响Closure Compiler 行为的JsDoc 标签。</p>
+<h2 id="const-const-type"><a href="#const-const-type" class="headerlink" title="@const @const {type}"></a><code>@const</code> <code>@const {type}</code></h2><p>标记一个变量只读，compiler会把<code>@const</code> 变量做inline 处理，从而优化js执行效率</p>
+<p>type 声明是可选的。</p>
+<p>如果@const 变量赋值超过1次，编译器会产生一条警告信息。如果变量是个对象，编译器不会禁止内部属性的变化。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">** @const */ var MY_BEER = 'stout';</div><div class="line"></div><div class="line">/**</div><div class="line"> * My namespace's favorite kind of beer.</div><div class="line"> * @const &#123;string&#125;</div><div class="line"> */</div><div class="line">mynamespace.MY_BEER = 'stout';</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="@constructor"></a><code>@constructor</code></h2><p>标记一个函数是构造函数，对于每一个使用new 作为关键字的函数，编译器需要 <code>@constructor</code> annotation 。如果使用EcmaScript的 <code>class</code> 构造器或使用 <code>google.defineClass</code> @constructor 应该被省略.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * A rectangle.</div><div class="line"> * @constructor</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">GM_Rect</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="define-Type-description"><a href="#define-Type-description" class="headerlink" title="@define {Type} description"></a><code>@define {Type}</code> <code>description</code></h2><p>标记一个变量可能在编译时被编译器覆盖。下面的例子中，你可以向编译器传入参数<code>--define=&#39;ENABLE_DEBUG=false&#39;</code> 来改变ENABLE_DEBUG 的值。类型可以是 <code>number</code>, <code>string</code> 或 <code>boolean</code> 。只能在全局作用域定义</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/** @define &#123;boolean&#125; */</span></div><div class="line"><span class="keyword">var</span> ENABLE_DEBUG = <span class="literal">true</span>;</div><div class="line"></div><div class="line"><span class="comment">/** @define &#123;boolean&#125; */</span></div><div class="line">goog.userAgent.ASSUME_IE = <span class="literal">false</span>;</div></pre></td></tr></table></figure>
+<h2 id="deprecated-Description"><a href="#deprecated-Description" class="headerlink" title="@deprecated Description"></a><code>@deprecated</code> <code>Description</code></h2><p>警告用户不建议使用这个function，method 或property。使用的话会报一条warning。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Determines whether a node is a field.</div><div class="line"> * @return &#123;boolean&#125; True if the contents of</div><div class="line"> *     the element are editable, but the element</div><div class="line"> *     itself is not.</div><div class="line"> * @deprecated Use isField().</div><div class="line"> */</div><div class="line">BN_EditUtil.isTopEditableField = <span class="function"><span class="keyword">function</span>(<span class="params">node</span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="dict"><a href="#dict" class="headerlink" title="dict"></a><code>dict</code></h2><p>@dict 用来创建property数量可变的对象。当一个constructor（这个例子中的<code>Foo</code>）被注释为@dict,你只能使用<code>[]</code>来访问Foo的属性。这个注释还可以直接用到一个对象的literals 上</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * @constructor</div><div class="line"> * @dict</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"><span class="keyword">var</span> obj1 = <span class="keyword">new</span> Foo();</div><div class="line">obj1[<span class="string">'x'</span>] = <span class="number">123</span>;</div><div class="line">obj1.x = <span class="number">234</span>;  <span class="comment">// warning</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> obj2 = <span class="comment">/** @dict */</span> &#123; <span class="string">'x'</span>: <span class="number">321</span> &#125;;</div><div class="line">obj2.x = <span class="number">123</span>;  <span class="comment">// warning</span></div></pre></td></tr></table></figure>
+<h2 id="enum-Type"><a href="#enum-Type" class="headerlink" title="@enum {Type}"></a><code>@enum {Type}</code></h2><p>Specifies the type of an enum. An enum is an object whose properties constitute a set of related constants. The @enum tag must be followed by a type expression. If the type of an enum is omitted, number is assumed.</p>
+<p>The type label of an enum applies to each property of the enum. For example if an enum has type number, each of its enumerated properties must be a number.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Enum for tri-state values.</div><div class="line"> * @enum &#123;number&#125;</div><div class="line"> */</div><div class="line">project.TriState = &#123;</div><div class="line">  <span class="attr">TRUE</span>: <span class="number">1</span>,</div><div class="line">  <span class="attr">FALSE</span>: <span class="number">-1</span>,</div><div class="line">  <span class="attr">MAYBE</span>: <span class="number">0</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="export-export-SomeType"><a href="#export-export-SomeType" class="headerlink" title="@export, @export {SomeType}"></a>@export, @export {SomeType}</h2><p>当一个属性 @export 标记，并且编译器有 <code>--generate_exports</code> ，一个相应的goog.exportSymbol声明会生成。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/** @export */</span></div><div class="line">foo.MyPublicClass.prototype.myPublicMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;;</div><div class="line">goog.exportSymbol(<span class="string">'foo.MyPublicClass.prototype.myPublicMethod'</span>,</div><div class="line">foo.MyPublicClass.prototype.myPublicMethod);</div><div class="line">You can write <span class="comment">/** @export &#123;SomeType&#125; */</span> <span class="keyword">as</span> a shorthand <span class="keyword">for</span> <span class="comment">/** @export @type &#123;SomeType&#125; */</span>.</div></pre></td></tr></table></figure>
+<p>Code that uses the @export annotation must either:<br>使用@export的代码必须 引入 closure/base.js 或在用户自己codebase中定义 <code>goog.exportSymbol</code></p>
+<p><strong>注：编译器会做很多优化，比如替换属性名，使用@export 就是为了属性名不被替换，在外部能够访问到</strong></p>
+<h2 id="nocollapse"><a href="#nocollapse" class="headerlink" title="@nocollapse"></a>@nocollapse</h2><p>Denotes a property that should not be collapsed by the compiler into a variable. The primary use for @nocollapse is to allow exporting of mutable properties. Note that non-collapsed properties can still be renamed by the compiler. If you annotate a property that is an object with @nocollapse, all its properties will also remain uncollapsed.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * A namespace.</div><div class="line"> * @const</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> foo = &#123;&#125;;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @nocollapse</div><div class="line"> */</div><div class="line">foo.bar = <span class="number">42</span>;</div><div class="line"></div><div class="line"><span class="built_in">window</span>[<span class="string">'foobar'</span>] = foo.bar;</div></pre></td></tr></table></figure>
+<h2 id="extends-Type"><a href="#extends-Type" class="headerlink" title="@extends {Type}"></a>@extends {Type}</h2><p>Marks a class or interface as inheriting from another class. A class marked with @extends must also be marked with either @constructor or @interface.</p>
+<p>Note: @extends does not cause a class to inherit from another class. The annotation simply tells the compiler that it can treat one class as a subclass of another during type-checking.<br>For an example implementation of inheritance, see the Closure Library function goog.inherits().</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Immutable empty node list.</div><div class="line"> * @constructor</div><div class="line"> * @extends &#123;goog.ds.BasicNodeList&#125;</div><div class="line"> */</div><div class="line">goog.ds.EmptyNodeList = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="externs"><a href="#externs" class="headerlink" title="@externs"></a>@externs</h2><p>Declares an externs file.</p>
+<p>Files annotated with @externs in the @fileoverview block are treated as externs files even if they appear compilation units regular srcs.</p>
+<p>For example:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * @fileoverview This is an externs file.</div><div class="line"> * @externs</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> <span class="built_in">document</span>;</div></pre></td></tr></table></figure>
+<h2 id="fileoverview-Description"><a href="#fileoverview-Description" class="headerlink" title="@fileoverview Description"></a>@fileoverview Description</h2><p>Makes the comment block provide file level information including suppressions.</p>
+<p>For example:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * @fileoverview Utilities for doing things </div><div class="line"> */</div></pre></td></tr></table></figure>
+<h2 id="final"><a href="#final" class="headerlink" title="@final"></a>@final</h2><p>Indicates that this class is not allowed to be extended. For methods, indicates that no subclass is allowed to override that method.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * A class that cannot be extended.</div><div class="line"> * @final</div><div class="line"> * @constructor</div><div class="line"> */</div><div class="line">sloth.MyFinalClass = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * A method that cannot be overridden.</div><div class="line"> * @final</div><div class="line"> */</div><div class="line"> </div><div class="line">sloth.MyFinalClass.prototype.method = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;;</div></pre></td></tr></table></figure>
+<h2 id="implements-Type"><a href="#implements-Type" class="headerlink" title="@implements {Type}"></a>@implements {Type}</h2><p>Used with @constructor to indicate that a class implements an interface.</p>
+<p>The compiler produces a warning if you tag a constructor with @implements and then fail to implement all of the methods and properties defined by the interface.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * A shape.</div><div class="line"> * @interface</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Shape</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">Shape.prototype.draw = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @constructor</div><div class="line"> * @implements &#123;Shape&#125;</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Square</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">Square.prototype.draw = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="implicitCast"><a href="#implicitCast" class="headerlink" title="@implicitCast"></a>@implicitCast</h2><p>This annotation can only appear in externs property declarations. The property has a declared type, but you can assign any type to it without a warning. When accessing the property, you get back a value of the declared type. For example, element.innerHTML can be assigned any type, but will always return a string.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * @type &#123;string&#125;</div><div class="line"> * @implicitCast</div><div class="line"> */</div><div class="line">Element.prototype.innerHTML;</div></pre></td></tr></table></figure>
+<h2 id="inheritDoc"><a href="#inheritDoc" class="headerlink" title="@inheritDoc"></a>@inheritDoc</h2><p>Indicates that a method or property of a subclass intentionally hides a method or property of the superclass, and has exactly the same documentation. Note that the @inheritDoc tag implies the @override tag, @override is preferred.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/** @inheritDoc */</span></div><div class="line">project.SubClass.prototype.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="interface-record"><a href="#interface-record" class="headerlink" title="@interface @record"></a>@interface @record</h2><p>Marks a function as an interface. An interface specifies the required members of a type. Any class that implements an interface must implement all of the methods and properties defined on the interface’s prototype. See @implements.</p>
+<p>The compiler verifies that interfaces are not instantiated. If the new keyword is used with an interface function, the compiler produces a warning.</p>
+<p>For the differences between @record and @interface, see Structural Interfaces</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * A shape.</div><div class="line"> * @interface</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Shape</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">Shape.prototype.draw = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * A polygon.</div><div class="line"> * @interface</div><div class="line"> * @extends &#123;Shape&#125;</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Polygon</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line">Polygon.prototype.getSides = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div></pre></td></tr></table></figure>
+<h2 id="lends-objectName"><a href="#lends-objectName" class="headerlink" title="@lends {objectName}"></a>@lends {objectName}</h2><p>Indicates that the keys of an object literal should be treated as properties of some other object. This annotation should only appear on object literals.</p>
+<p>Notice that the name in braces is not a type name like in other annotations. It’s an object name. It names the object to which the properties are lent. For example, @type {Foo} means “an instance of Foo”, but @lends {Foo} means “the constructor Foo”.</p>
+<p>The JSDoc Toolkit docs have more information on this annotation.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">goog.object.extend(</div><div class="line">    Button.prototype,</div><div class="line">    <span class="comment">/** @lends &#123;Button.prototype&#125; */</span> (&#123;</div><div class="line">      <span class="attr">isButton</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="literal">true</span>; &#125;</div><div class="line">    &#125;));</div></pre></td></tr></table></figure>
+<h2 id="license-preserve-Description"><a href="#license-preserve-Description" class="headerlink" title="@license, @preserve Description"></a>@license, @preserve Description</h2><p>Tells the compiler to insert the associated comment before the compiled code for the marked file. This annotation allows important notices (such as legal licenses or copyright text) to survive compilation unchanged. Line breaks are preserved.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * @preserve Copyright 2009 SomeThirdParty.</div><div class="line"> * Here is the full license text and copyright</div><div class="line"> * notice for this file. Note that the notice can span several</div><div class="line"> * lines and is only terminated by the closing star and slash:</div><div class="line"> */</div></pre></td></tr></table></figure>
+<h2 id="nosideeffects-modifies-this-arguments"><a href="#nosideeffects-modifies-this-arguments" class="headerlink" title="@nosideeffects @modifies {this|arguments}"></a>@nosideeffects @modifies {this|arguments}</h2><p>@nosideeffects indicates that a call to the declared function has no side effects. This annotation allows the compiler to remove calls to the function if the return value is not used. This is not a signal that the function is “pure”, it may still read mutable global state.</p>
+<p>@modifies {this} signals that only direct properties of the provided this are modified. Calls to these functions maybe be removed if the “this” object is known to be otherwise unused.</p>
+<p>@modifies {arguments} signals that only direct properties of the provided arguments are modified. Calls to these functions maybe be removed if the parameters provided to the function are otherwise known to be otherwise unused.</p>
+<p>Theses annotation is only allowed in extern files.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/** @nosideeffects */</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">noSideEffectsFn1</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/** @nosideeffects */</span></div><div class="line"><span class="keyword">var</span> noSideEffectsFn2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/** @nosideeffects */</span></div><div class="line">a.prototype.noSideEffectsFn3 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;;</div><div class="line">@override</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @return &#123;string&#125; Human-readable representation of</div><div class="line"> *     project.SubClass.</div><div class="line"> * @override</div><div class="line"> */</div><div class="line">project.SubClass.prototype.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Indicates that a method or property of a subclass intentionally hides a method or property of the superclass. If no other annotations are included, the method or property automatically inherits annotations from its superclass.</p>
+<h2 id="package"><a href="#package" class="headerlink" title="@package"></a>@package</h2><p>Marks a member or property as package private. Only code in the same directory can access names marked @package. In particular, code in parent and child directories cannot access names marked @package.</p>
+<p>Public constructors can have @package properties to restrict the methods that callers outside the directory can use. On the other hand, @package constructors can have public properties to prevent callers outside the directory from directly instantiating a type.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Returns the window object the foreign document resides in.</div><div class="line"> *</div><div class="line"> * @return &#123;Object&#125; The window object of the peer.</div><div class="line"> * @package</div><div class="line"> */</div><div class="line">goog.net.xpc.CrossPageChannel.prototype.getPeerWindowObject = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="param-Type-varname-Description"><a href="#param-Type-varname-Description" class="headerlink" title="@param {Type} varname Description"></a>@param {Type} varname Description</h2><p>Used with method, function and constructor definitions to specify the types of function arguments.</p>
+<p>The @param tag must be followed by a type expression.</p>
+<p>Alternatively, you can annotate the types of the parameters inline (see function foo in the example).<br><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Queries a Baz for items.</div><div class="line"> * @param &#123;number&#125; groupNum Subgroup id to query.</div><div class="line"> * @param &#123;string|number|null&#125; term An itemName,</div><div class="line"> *     or itemId, or null to search everything.</div><div class="line"> */</div><div class="line">goog.Baz.prototype.query = <span class="function"><span class="keyword">function</span>(<span class="params">groupNum, term</span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"><span class="regexp">/** number */</span> a, <span class="regexp">/** number */</span> b</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> a - b + <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="private"><a href="#private" class="headerlink" title="@private"></a>@private</h2><p>Marks a member as private. Only code in the same file can access global variables and functions marked @private. Constructors marked @private can only be instantiated by code in the same file and by their static and instance members.</p>
+<p>The public static properties of constructors marked @private may also be accessed anywhere, and the instanceof operator can always access @private members.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Handlers that are listening to this logger.</div><div class="line"> * @private &#123;Array&lt;Function&gt;&#125;</div><div class="line"> */</div><div class="line"><span class="keyword">this</span>.handlers_ = [];</div></pre></td></tr></table></figure>
+<h2 id="protected"><a href="#protected" class="headerlink" title="@protected"></a>@protected</h2><p>Indicates that a member or property is protected. A property marked @protected is accessible to:</p>
+<p>all code in the same file<br>static methods and instance methods of any subclass of the class on which the property is defined.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Sets the component's root element to the given element.</div><div class="line"> * Considered protected and final.</div><div class="line"> * @param &#123;Element&#125; element Root element for the component.</div><div class="line"> * @protected</div><div class="line"> */</div><div class="line">goog.ui.Component.prototype.setElementInternal = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="public"><a href="#public" class="headerlink" title="@public"></a>@public</h2><p>Indicates that a member or property is public. A property marked @public is accessible to all code in the any file. This is the implicit default and rarely used. This is not used to indicate that name should be preserved in obfuscating builds see @export.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * @public</div><div class="line"> */</div><div class="line">goog.ui.Component.prototype.setElementInternal = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="return-Type-Description"><a href="#return-Type-Description" class="headerlink" title="@return {Type} Description"></a>@return {Type} Description</h2><p>Specifies the return types of method and function definitions. The @return tag must be followed by a type expression.</p>
+<p>Alternatively, you can annotate the return type inline (see function foo in the example).</p>
+<p>If a function that is not in externs has no return value, you can omit the @return tag, and the compiler will assume that the function returns undefined.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Returns the ID of the last item.</div><div class="line"> * @return &#123;string&#125; The hex ID.</div><div class="line"> */</div><div class="line">goog.Baz.prototype.getLastId = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  ...</div><div class="line">  return id;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> /** <span class="title">number</span> */ <span class="title">foo</span>(<span class="params">x</span>) </span>&#123; <span class="keyword">return</span> x - <span class="number">1</span>; &#125;</div></pre></td></tr></table></figure>
+<h2 id="struct"><a href="#struct" class="headerlink" title="@struct"></a>@struct</h2><p>@struct is used to create objects with a fixed number of properties. When a constructor (Foo in the example) is annotated with @struct, you can only use the dot notation to access the properties of Foo objects, not the bracket notation. Also, you cannot add a property to a Foo instance after it’s constructed. The annotation can also be used directly on object literals.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * @constructor</div><div class="line"> * @struct</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.x = x;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> obj1 = <span class="keyword">new</span> Foo(<span class="number">123</span>);</div><div class="line"><span class="keyword">var</span> someVar = obj1.x;  <span class="comment">// OK</span></div><div class="line">obj1.x = <span class="string">"qwerty"</span>;  <span class="comment">// OK</span></div><div class="line">obj1[<span class="string">'x'</span>] = <span class="string">"asdf"</span>;  <span class="comment">// warning</span></div><div class="line">obj1.y = <span class="number">5</span>;  <span class="comment">// warning</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> obj2 = <span class="comment">/** @struct */</span> &#123; <span class="attr">x</span>: <span class="number">321</span> &#125;;</div><div class="line">obj2[<span class="string">'x'</span>] = <span class="number">123</span>;  <span class="comment">// warning</span></div></pre></td></tr></table></figure>
+<h2 id="suppress-warningGroup1-warningGroup2"><a href="#suppress-warningGroup1-warningGroup2" class="headerlink" title="@suppress {warningGroup1,warningGroup2}"></a>@suppress {warningGroup1,warningGroup2}</h2><p>Suppresses warnings. Warning categories are separated by | or ,. For a list of warning names, take a look at Warnings.</p>
+<p>For example:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * @suppress &#123;deprecated&#125;</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  deprecatedVersionOfF();</div><div class="line">&#125;</div><div class="line">@template T</div><div class="line"></div><div class="line">See Generic Types.</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @param &#123;T&#125; t</div><div class="line"> * @constructor</div><div class="line"> * @template T</div><div class="line"> */</div><div class="line">Container = <span class="function"><span class="keyword">function</span>(<span class="params">t</span>) </span>&#123; ... &#125;;</div></pre></td></tr></table></figure>
+<h2 id="this-Type"><a href="#this-Type" class="headerlink" title="@this {Type}"></a>@this {Type}</h2><p>Specifies the type of the object to which the keyword this refers within a function. The @this tag must be followed by a type expression.</p>
+<p>To prevent compiler warnings, you must use a @this annotation whenever this appears in a function that is neither a prototype method nor a function marked as a @constructor.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Returns the roster widget element.</div><div class="line"> * @this &#123;Widget&#125;</div><div class="line"> * @return &#123;Element&#125;</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.getComponent().getElement();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="throws-Type"><a href="#throws-Type" class="headerlink" title="@throws {Type}"></a>@throws {Type}</h2><p>Used to document the exceptions thrown by a function. The type checker does not currently use this information. It is only used to figure out if a function declared in an externs file has side effects.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * @throws &#123;DOMException&#125;</div><div class="line"> */</div><div class="line">DOMApplicationCache.prototype.swapCache = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;;</div></pre></td></tr></table></figure>
+<h2 id="type-Type"><a href="#type-Type" class="headerlink" title="@type {Type}"></a>@type {Type}</h2><p>Identifies the type of a variable, property, or expression. The @type tag must be followed by a type expression. You can also write the type annotation inline and omit @type, as in the second example.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * The message hex ID.</div><div class="line"> * @type &#123;string&#125;</div><div class="line"> */</div><div class="line"><span class="keyword">var</span> hexId = hexId;</div><div class="line"><span class="keyword">var</span> <span class="comment">/** string */</span> name = <span class="string">'Jamie'</span>;</div></pre></td></tr></table></figure>
+<h2 id="typedef-Type"><a href="#typedef-Type" class="headerlink" title="@typedef {Type}"></a>@typedef {Type}</h2><p>Declares an alias for a more complex type. Currently, typedefs can only be defined at the top level, not inside functions. We have fixed this limitation in the new type inference.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/** @typedef &#123;(string|number)&#125; */</span></div><div class="line">goog.NumberLike;</div><div class="line"></div><div class="line"><span class="comment">/** @param &#123;goog.NumberLike&#125; x A number or a string. */</span></div><div class="line">goog.readNumber = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="unrestricted"><a href="#unrestricted" class="headerlink" title="@unrestricted"></a>@unrestricted</h2><p>Indicates that a class is neither a @struct type, nor a @dict type. This is the default so it is generally not necessary to write it explicitly, unless you are using goog.defineClass, or the class keyword, which both produce classes which are @structs by default.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * @constructor</div><div class="line"> * @unrestricted</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.x = x;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> obj1 = <span class="keyword">new</span> Foo(<span class="number">123</span>);</div><div class="line"><span class="keyword">var</span> someVar = obj1.x;  <span class="comment">// OK</span></div><div class="line">obj1.x = <span class="string">"qwerty"</span>;  <span class="comment">// OK</span></div><div class="line">obj1[<span class="string">'x'</span>] = <span class="string">"asdf"</span>;  <span class="comment">// OK</span></div><div class="line">obj1.y = <span class="number">5</span>;  <span class="comment">// OK</span></div></pre></td></tr></table></figure>
+<p>Special purpose annotations</p>
+<h2 id="noalias"><a href="#noalias" class="headerlink" title="@noalias"></a>@noalias</h2><p>Used in an externs file to indicate to the compiler that the variable or function should not be aliased as part of the “alias externals” pass of the compiler, is not enabled by default and only available through the Java API.</p>
+<p>For example:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/** @noalias */</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Range</span>(<span class="params"></span>) </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<h2 id="nocompile"><a href="#nocompile" class="headerlink" title="@nocompile"></a>@nocompile</h2><p>For example</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/** @nocompile */</span></div></pre></td></tr></table></figure>
+<p>Used at the top of a file to tell the compiler to parse this file but not compile it. Code that is not meant for compilation and should be omitted from compilation tests (such as bootstrap code) uses this annotation. Most code should use other means such as a @define to change behavior.</p>
+
+        
+      </div>
+      <footer>
+        
+          
+          
+  
+  <div class="tags">
+    <a href="/tags/google-closure-compiler/">google closure compiler</a>, <a href="/tags/前端/">前端</a>
+  </div>
+
+          <div class="share">
+  
+
+    
+
+    
+      <div class="g-plusone"></div>
+
+      <script type="text/javascript">
+        window.___gcfg = {lang: 'en-GB'};
+
+        (function() {
+          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+          po.src = 'https://apis.google.com/js/platform.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+      </script>
+    
+
+    
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="halfer53">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    
+    <div id ="sharewx" style="padding-top:20px;">
+    <div>扫码分享到微信</div>
+        
+        <script>
+            (function showQS(){
+                var url = 'http://pan.baidu.com/share/qrcode?w=150&h=150&url=' + encodeURIComponent(window.location.href);
+                var img = $('<img>');
+                img.attr('src',url);
+                $('#sharewx').append(img);       
+            })()
+        </script>
+    </div>
+  
+</div>
+          
+<nav class="article-nav clearfix">
+ 
+ <div class="article-prev" >
+ <a href="/2017/07/13/thinking-in-block-chain/" title="区块链技术思考">
+  <i class="fa fa-long-arrow-left"></i>
+  <span>
+  区块链技术思考</span>
+</a>
+</div>
+
+
+<div class="article-next">
+<a href="/2016/10/20/make-weapp-api-w3c/"  title="记录将微信小程序的API适配到W3C标准">
+ <span>记录将微信小程序的API适配到W3C标准
+</span>
+<i class="fa fa-long-arrow-right"></i>
+</a>
+</div>
+
+</nav>
+
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+<section id="comment">
+
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright"><div class="padding">
+	
+	  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jack-x.engineer">
+  </form>
+</div>
+	
+	  
+<div class="widget recent-post">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2017/07/13/thinking-in-block-chain/">区块链技术思考</a>
+      </li>
+    
+      <li>
+        <a href="/2016/11/03/google-closure-anotations/">google closure compiler 中的 annotation</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/20/make-weapp-api-w3c/">记录将微信小程序的API适配到W3C标准</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/19/wilddog-weapp/">野狗与微信小程序结合</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/17/hexo-trick/">hexo 使用心得</a>
+      </li>
+    
+  </ul>
+</div>
+
+	
+	  
+	
+	  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  
+    <a href="/tags/google-closure-compiler/">google closure compiler<small>1</small></a>
+  
+    <a href="/tags/hexo/">hexo<small>1</small></a>
+  
+    <a href="/tags/javascript/">javascript<small>1</small></a>
+  
+    <a href="/tags/react-native/">react-native<small>0</small></a>
+  
+    <a href="/tags/前端/">前端<small>4</small></a>
+  
+    <a href="/tags/区块链，分布式/">区块链，分布式<small>1</small></a>
+  
+    <a href="/tags/实时化/">实时化<small>1</small></a>
+  
+    <a href="/tags/小程序/">小程序<small>0</small></a>
+  
+    <a href="/tags/微信/">微信<small>0</small></a>
+  
+    <a href="/tags/微信小程序/">微信小程序<small>1</small></a>
+  
+    <a href="/tags/野狗/">野狗<small>0</small></a>
+  
+</div>
+
+	
+</div></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="padding">
+	<div class="alignleft">
+	  
+	  &copy; 2017 Jack X
+	  
+	  Powerd by <a href="http://hexo.io/" target="_blank">hexo</a>
+	</div>
+
+	<div class="alignright">
+		
+		
+		
+		
+		
+		
+		
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<div class="scroll-top"><i class="fa fa-arrow-circle-up"></i></div></footer>
+  <!-- mathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<script type="text/javascript">
+$(window).scroll(function() {
+
+    if($(this).scrollTop() > 400) {
+        $('.scroll-top').fadeIn(200);
+    } else {
+        $('.scroll-top').fadeOut(200);
+    }
+});
+
+$('.scroll-top').bind('click', function(e) {
+    e.preventDefault();
+    $('body,html').animate({scrollTop:0},200);
+});
+</script>
+
+
+</body>
+</html>

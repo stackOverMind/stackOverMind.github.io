@@ -1,0 +1,379 @@
+<!DOCTYPE HTML>
+
+    <html lang="zh-Hans">
+  
+<head>
+  <meta charset="utf-8">
+  
+  <title>闲话前端和微信小程序 | Sigularity-Jack X</title>
+  <meta name="author" content="Jack X">
+  
+  <meta name="description" content="这是一个大JavaScript开发者的时代微信小程序发布或泄露，在互联网圈被刷了屏。许多人高呼这是HTML5的又一大胜利，然而事实真的是这样的吗？随着更多细节的披露我们了解到微信小程序是基于类似React Native技术的。React Native严格来说并不能算HTML5技术。在移动端HTML5技术约等于hyper，最大特点是基于浏览器内核，HTML5的野心也是用浏览器覆盖所有的屏幕，用DOM霸占所有的开发者，基于浏览器内核才是关键。反观RN技术，或微信小程序并不依赖于任何浏览器内核，而是通过一个JS到native的bridge直接调用原生组件。RN本身就是对HTML5的背叛。所以，我认为与其说这是HTML5的胜利不如说这是HTML5的失败。 
+然而，不管HTML5也好，ReactNative也好，微信小程序也好，背后都离不开JavaScript技术。现在，使用JavaScript你可以使用NodeJs做服务端，可以做HTML5开发，也可做移动端。可以说在看得见的地方JavaScript已经无处不在了。所以，这是JavaScript工程师最好的时代。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="闲话前端和微信小程序"/>
+  <meta property="og:site_name" content="Sigularity-Jack X"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <meta http-equiv="Content-Language" content="zh-Hans"/>
+  
+
+  <link href="/img/favicon.png" rel="icon">
+  
+    <link rel="apple-touch-icon" href="/img/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-icon.png">
+    
+
+  <link rel="alternate" href="/atom.xml" title="Sigularity-Jack X" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <style type="text/css">
+  /* Tim Pietrusky advanced checkbox hack (Android <= 4.1.2) */
+body{ -webkit-animation: bugfix infinite 1s; }
+@-webkit-keyframes bugfix { from {padding:0;} to {padding:0;} }
+
+  
+  <!-- Chinese readability improvements -->
+    article {font-weight: 400;letter-spacing: .01rem;}
+    article .entry{line-height:3;}
+  
+
+  
+    article .post-content-index .entry{max-height: 550px; overflow:hidden;}
+  
+</style>
+
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84649757-1', 'auto');
+  ga('send', 'pageview');
+ 
+</script>
+
+
+
+
+  
+    <!-- 360 Font and Baidu CDN in China -->
+    
+  <link href='//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  <script src="//libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+  
+
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="padding">
+	<div class="alignleft logo">
+	  <h1><a href="/">Sigularity-Jack X</a></h1>
+      <a href="https://travis-ci.org/stackOverMind/singularity"><img src="https://camo.githubusercontent.com/a469219c6d92527f999c0b0375b8b5160a47453b/68747470733a2f2f7472617669732d63692e6f72672f737461636b4f7665724d696e642f73696e67756c61726974792e7376673f6272616e63683d6d6173746572" alt="Build Status" data-canonical-src="https://travis-ci.org/stackOverMind/singularity.svg?branch=master" style="max-width:100%;"></a>
+	</div>
+	<nav id="main-nav" class="alignright">
+		<input type="checkbox" id="toggle" />
+		<label for="toggle" class="toggle" data-open="Main Menu" data-close="Close Menu" onclick><i class="fa fa-bars"></i></label>
+	  <ul class="menu">
+	    
+	      <li><a href="/">Home</a></li>
+	    
+	      <li><a href="/archives">Archives</a></li>
+	    
+	      <li><a href="/aboutme/">About</a></li>
+	    
+	    
+	  </ul>
+	</nav>
+	<div class="clearfix"></div>
+</div>
+</header>
+  <div id="page-heading-wrap">
+  	<div class="inner">
+      <div class="padding">
+    		
+          <h1>闲话前端和微信小程序</h1>
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-09-23T19:09:30.000Z">2016-09-23</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+            <li>
+              <span class="heading-span">With: </span>
+              
+            </li>
+          </ul>
+        
+      </div>
+  	</div>
+  </div>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper" class="padding"><article class="post">
+  
+  
+    <div class="post-content">
+  
+      
+      <div class="entry">
+        
+          <h2 id="这是一个大JavaScript开发者的时代"><a href="#这是一个大JavaScript开发者的时代" class="headerlink" title="这是一个大JavaScript开发者的时代"></a>这是一个大JavaScript开发者的时代</h2><p>微信小程序发布或泄露，在互联网圈被刷了屏。许多人高呼这是HTML5的又一大胜利，然而事实真的是这样的吗？随着更多细节的披露我们了解到微信小程序是基于类似React Native技术的。React Native严格来说并不能算HTML5技术。在移动端HTML5技术约等于hyper，最大特点是基于浏览器内核，HTML5的野心也是用浏览器覆盖所有的屏幕，用DOM霸占所有的开发者，基于浏览器内核才是关键。反观RN技术，或微信小程序并不依赖于任何浏览器内核，而是通过一个JS到native的bridge直接调用原生组件。RN本身就是对HTML5的背叛。所以，我认为与其说这是HTML5的胜利不如说这是HTML5的失败。 </p>
+<p>然而，不管HTML5也好，ReactNative也好，微信小程序也好，背后都离不开JavaScript技术。现在，使用JavaScript你可以使用NodeJs做服务端，可以做HTML5开发，也可做移动端。可以说在看得见的地方JavaScript已经无处不在了。所以，这是JavaScript工程师最好的时代。<br><a id="more"></a> </p>
+<h2 id="入口之争"><a href="#入口之争" class="headerlink" title="入口之争"></a>入口之争</h2><p>用技术的眼光看小程序无非是在RN的基础上做了些改动的又一个轮子。这些年前端的轮子漫天飞，相比于Angular，React这些强大的轮子来说，小程序这个轮子其实不值一提，并没有在技术上有什么突破。然而，所谓轮子的背后都是大厂的博弈，而他们争夺的很多时候都是一个入口。</p>
+<p>小程序也是如此，拥有大量用户，就可以拥有入口地位，剩下的就是一个方式了。以往的方式是公众号，朋友圈等。现在小程序的方式更进一步，在底层操作系统的基础上再建一层系统，从而接管了操作系统的入口地位，这才是关键所在。这很像浏览器以及HTML5，企图在底层操作系统上构建自己的生态。</p>
+<p>chrome为了HTML5的大理想开发了chromebook，那么微信会不会开发微信手机？看到chromebook的现状，我相信微信一定会三思而行。</p>
+<h2 id="关于UI，前端的生和死"><a href="#关于UI，前端的生和死" class="headerlink" title="关于UI，前端的生和死"></a>关于UI，前端的生和死</h2><p>User Interface 是个高度抽象的概念。不但抽象，而且准确。准确在于表达是什么的同时不约定形式。广义的UI不止屏幕，图形。只要能够做到计算机与人交流的都算UI。在过去是命令行（虽然现在很多工程师依然使用命令行），现在是图形界面。UI随着计算机能力的发展越来越强大。</p>
+<p>但随着移动互联网兴起，UI却变得更简单了。由简单到复杂的变化发生了逆转。在未来是否真的需要一块屏幕？</p>
+<p>我认为无需外接屏幕，直接神经连接的时代会来临，但取决于很多关键技术的突破，这一天还很远。这一天来临之前其实我们有另一种选择：</p>
+<p>有一天微信根本不需要应用号，因为微信本身就可以做到一切，你用自然语言或语音直接与机器交谈。随着深度机器学习的发展，这一天其实并不遥远。这一天意味着html5，react native 等所有前端的轮子都归于沉寂，前端的繁荣也会落幕。那时候我们的前端工程师怎么办？管那么多，趁着繁荣，继续投身到大前端时代吧！</p>
+<p>未来属于人工智能，量子计算机。</p>
+<p>再未来。。。那些不属于人类，让人工智能去做吧，我们做猪。</p>
+
+        
+      </div>
+      <footer>
+        
+          
+          
+  
+  <div class="tags">
+    <a href="/tags/前端/">前端</a>, <a href="/tags/微信小程序/">微信小程序</a>
+  </div>
+
+          <div class="share">
+  
+
+    
+
+    
+      <div class="g-plusone"></div>
+
+      <script type="text/javascript">
+        window.___gcfg = {lang: 'en-GB'};
+
+        (function() {
+          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+          po.src = 'https://apis.google.com/js/platform.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+      </script>
+    
+
+    
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="halfer53">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    
+    <div id ="sharewx" style="padding-top:20px;">
+    <div>扫码分享到微信</div>
+        
+        <script>
+            (function showQS(){
+                var url = 'http://pan.baidu.com/share/qrcode?w=150&h=150&url=' + encodeURIComponent(window.location.href);
+                var img = $('<img>');
+                img.attr('src',url);
+                $('#sharewx').append(img);       
+            })()
+        </script>
+    </div>
+  
+</div>
+          
+<nav class="article-nav clearfix">
+ 
+ <div class="article-prev" >
+ <a href="/2016/09/24/realtime/" title="web实时化（iweb ppt内容）">
+  <i class="fa fa-long-arrow-left"></i>
+  <span>
+  web实时化（iweb ppt内容）</span>
+</a>
+</div>
+
+
+<div class="article-next">
+<a href="/2016/01/01/js-test/"  title="js-test">
+ <span>js-test
+</span>
+<i class="fa fa-long-arrow-right"></i>
+</a>
+</div>
+
+</nav>
+
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+<section id="comment">
+
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright"><div class="padding">
+	
+	  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jack-x.engineer">
+  </form>
+</div>
+	
+	  
+<div class="widget recent-post">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2017/07/13/thinking-in-block-chain/">区块链技术思考</a>
+      </li>
+    
+      <li>
+        <a href="/2016/11/03/google-closure-anotations/">google closure compiler 中的 annotation</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/20/make-weapp-api-w3c/">记录将微信小程序的API适配到W3C标准</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/19/wilddog-weapp/">野狗与微信小程序结合</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/17/hexo-trick/">hexo 使用心得</a>
+      </li>
+    
+  </ul>
+</div>
+
+	
+	  
+	
+	  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  
+    <a href="/tags/google-closure-compiler/">google closure compiler<small>1</small></a>
+  
+    <a href="/tags/hexo/">hexo<small>1</small></a>
+  
+    <a href="/tags/javascript/">javascript<small>1</small></a>
+  
+    <a href="/tags/react-native/">react-native<small>0</small></a>
+  
+    <a href="/tags/前端/">前端<small>4</small></a>
+  
+    <a href="/tags/区块链，分布式/">区块链，分布式<small>1</small></a>
+  
+    <a href="/tags/实时化/">实时化<small>1</small></a>
+  
+    <a href="/tags/小程序/">小程序<small>0</small></a>
+  
+    <a href="/tags/微信/">微信<small>0</small></a>
+  
+    <a href="/tags/微信小程序/">微信小程序<small>1</small></a>
+  
+    <a href="/tags/野狗/">野狗<small>0</small></a>
+  
+</div>
+
+	
+</div></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="padding">
+	<div class="alignleft">
+	  
+	  &copy; 2017 Jack X
+	  
+	  Powerd by <a href="http://hexo.io/" target="_blank">hexo</a>
+	</div>
+
+	<div class="alignright">
+		
+		
+		
+		
+		
+		
+		
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<div class="scroll-top"><i class="fa fa-arrow-circle-up"></i></div></footer>
+  <!-- mathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<script type="text/javascript">
+$(window).scroll(function() {
+
+    if($(this).scrollTop() > 400) {
+        $('.scroll-top').fadeIn(200);
+    } else {
+        $('.scroll-top').fadeOut(200);
+    }
+});
+
+$('.scroll-top').bind('click', function(e) {
+    e.preventDefault();
+    $('body,html').animate({scrollTop:0},200);
+});
+</script>
+
+
+</body>
+</html>

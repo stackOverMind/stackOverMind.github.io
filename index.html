@@ -1,0 +1,904 @@
+<!DOCTYPE HTML>
+
+    <html lang="zh-Hans">
+  
+<head>
+  <meta charset="utf-8">
+  
+  <title>Sigularity-Jack X</title>
+  <meta name="author" content="Jack X">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Sigularity-Jack X"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <meta http-equiv="Content-Language" content="zh-Hans"/>
+  
+
+  <link href="/img/favicon.png" rel="icon">
+  
+    <link rel="apple-touch-icon" href="/img/apple-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple-icon.png">
+    
+
+  <link rel="alternate" href="/atom.xml" title="Sigularity-Jack X" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <style type="text/css">
+  /* Tim Pietrusky advanced checkbox hack (Android <= 4.1.2) */
+body{ -webkit-animation: bugfix infinite 1s; }
+@-webkit-keyframes bugfix { from {padding:0;} to {padding:0;} }
+
+  
+  <!-- Chinese readability improvements -->
+    article {font-weight: 400;letter-spacing: .01rem;}
+    article .entry{line-height:3;}
+  
+
+  
+    article .post-content-index .entry{max-height: 550px; overflow:hidden;}
+  
+</style>
+
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84649757-1', 'auto');
+  ga('send', 'pageview');
+ 
+</script>
+
+
+
+
+  
+    <!-- 360 Font and Baidu CDN in China -->
+    
+  <link href='//apps.bdimg.com/libs/fontawesome/4.1.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  <script src="//libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+  
+
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="padding">
+	<div class="alignleft logo">
+	  <h1><a href="/">Sigularity-Jack X</a></h1>
+      <a href="https://travis-ci.org/stackOverMind/singularity"><img src="https://camo.githubusercontent.com/a469219c6d92527f999c0b0375b8b5160a47453b/68747470733a2f2f7472617669732d63692e6f72672f737461636b4f7665724d696e642f73696e67756c61726974792e7376673f6272616e63683d6d6173746572" alt="Build Status" data-canonical-src="https://travis-ci.org/stackOverMind/singularity.svg?branch=master" style="max-width:100%;"></a>
+	</div>
+	<nav id="main-nav" class="alignright">
+		<input type="checkbox" id="toggle" />
+		<label for="toggle" class="toggle" data-open="Main Menu" data-close="Close Menu" onclick><i class="fa fa-bars"></i></label>
+	  <ul class="menu">
+	    
+	      <li><a href="/">Home</a></li>
+	    
+	      <li><a href="/archives">Archives</a></li>
+	    
+	      <li><a href="/aboutme/">About</a></li>
+	    
+	    
+	  </ul>
+	</nav>
+	<div class="clearfix"></div>
+</div>
+</header>
+  <div id="page-heading-wrap">
+  	<div class="inner">
+      <div class="padding">
+    		
+          <h2></h2>
+        
+      </div>
+  	</div>
+  </div>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper" class="padding">
+  <article class="post">
+  
+  
+    <div class="post-content-index">
+  
+      
+        <header>
+          <div class="icon"></div>
+            
+    
+  
+    
+      <h1 class="title transition"><a href="/2017/07/13/thinking-in-block-chain/">区块链技术思考</a></h1>
+    
+  
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2017-07-13T17:05:37.000Z">2017-07-13</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+          </ul>
+        </header>
+      
+      <div class="entry">
+        
+          
+            <p>很长时间没有写作，博客快要荒废了（虽然本来就没几篇文章）。。</p>
+<p>这段时间研究了很多技术，涉及面非常广，包含深度学习，量子计算，分布式系统等等。有的了解了基本原理就放弃了，有的稍微深入一点。区块链技术属于前者。</p>
+<p>区块链技术其实是一种分布式系统。其最根本的问题还是解决一致性问题，整个区块链不能分裂。这跟一般分布式系统是一样的。一般的分布式系统使用 paxo 或 raft 来保证同一时间只能有一个master（leader），所有多系统的更改都由master 发起，从而保证整个系统的一致性。</p>
+<p>区块链也需要一个leader节点，但开放网络环境下节点实在太多了，大家都争这个leader权限是要打仗的，而且不知道要打多少轮才能决出胜者。为了解决这个问题，区块链引进了一个核心概念：工作量证明。简单的说就是谁NB谁当leader，光打嘴炮可不行，你得证明你NB。如何证明呢？算个hash吧。</p>
+<p>假如有一系列交易数据A B C,为了保证这些交易不被篡改，我们可以算一个hash</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">h0 = hash(A)</div><div class="line">h1 ＝ hash(B+h0)</div><div class="line">h2 = hash(C+h2)</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>这样就形成了一个链式结构，在这个链上任何一条数据做了修改，哪么整个链最后的hash都会发生变化，这一点确保其不可被修改。</p>
+<p>只是不被篡改，这个事情还没完，因为我们的问题还没有解答，如何选出leader？</p>
+<p>如果我们对h0,h1,h2 增加一点要求，要求其只能以 n个0开头，公式也做一点变化<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">h0=  hash(A|| Nonce0) </div><div class="line">h1 = hash(B || h0 || Nonce1)</div><div class="line">h2 = hash(C || h1 || Nonce2)</div></pre></td></tr></table></figure></p>
+<p>那么这个难度就增加了，而且通过h 来推导Nonce几乎是不可能的。所以只能通过硬算，不断尝试，去凑。这样谁运算的速度快 ＋ 一点运气，谁就能当leader。leader的作用就是记帐，所以争夺leader就是争夺记帐权。而比特币，或其他虚拟货币为了让这个机制work下去，会给leader一定的奖励，所以就有了挖矿这回事。挖矿就是去争做leader，争着记帐。</p>
+<p>因为要保证公平，所以这个leader是一次性的，比特币会调整难度值（就是要求计算出来的hash 由几个0开头）来保证始终差不多10分钟产生一个新的区块。这也就是一个交易要等10分钟才能被commit到区块链中的原因。</p>
+<p>基本原理到这里。</p>
+<p>区块链技术的优点所有人都知道。但任何技术都不是万能的，区块链也一样。区块链的工作量证明机制就是其最大的缺陷。为了确定一个记帐权限，需要大量的计算，而且计算量还会不断增加。其实这些计算量是没有任何意义的，不产生任何价值，也就是完全的浪费。</p>
+
+          
+        
+      </div>
+      <footer>
+        
+          <div class="alignright">
+            <a href="/2017/07/13/thinking-in-block-chain/#more" class="more-link">Continue Reading<i class="fa fa-long-arrow-right fa-1"></i></a>
+          </div>
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  
+    <div class="post-content-index">
+  
+      
+        <header>
+          <div class="icon"></div>
+            
+    
+  
+    
+      <h1 class="title transition"><a href="/2016/11/03/google-closure-anotations/">google closure compiler 中的 annotation</a></h1>
+    
+  
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-11-03T16:25:16.000Z">2016-11-03</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+          </ul>
+        </header>
+      
+      <div class="entry">
+        
+          
+            <p>因为经常要用到 google closure compiler 中的 annotation,所以索性把<a href="https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler" target="_blank" rel="external">https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler</a> 翻译出来。</p>
+<p>虽然google closure compiler 用的人一直不多，但对于一些需要高压缩比的js项目来说还是无可取代的。翻译出来，或许能够对别人有所帮助。</p>
+<p><code>Closure Compiler</code> 可以利用Js变量的类型信息来增强优化。然而JS中没有类型。因为JS中没有类型的概念，所以你必须使用注释来标注数据的类型。</p>
+<p><code>Closure Compiler</code>使用 JSdoc中使用的annotation。这篇文档描述了ClosureCompiler能够认识的annotation</p>
+<h1 id="JSdoc-标签"><a href="#JSdoc-标签" class="headerlink" title="JSdoc 标签"></a>JSdoc 标签</h1><p>Closure Compiler（以下称为编译器） 在 JSdoc 标签中寻找有用的类型信息。使用下面的标签可以帮助 Closure Compiler 优化你的代码，检查可能的类型错误和其他问题。</p>
+<p>以下仅仅包含能够影响Closure Compiler 行为的JsDoc 标签。</p>
+<h2 id="const-const-type"><a href="#const-const-type" class="headerlink" title="@const @const {type}"></a><code>@const</code> <code>@const {type}</code></h2><p>标记一个变量只读，compiler会把<code>@const</code> 变量做inline 处理，从而优化js执行效率</p>
+<p>type 声明是可选的。</p>
+<p>如果@const 变量赋值超过1次，编译器会产生一条警告信息。如果变量是个对象，编译器不会禁止内部属性的变化。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">** @const */ var MY_BEER = 'stout';</div><div class="line"></div><div class="line">/**</div><div class="line"> * My namespace's favorite kind of beer.</div><div class="line"> * @const &#123;string&#125;</div><div class="line"> */</div><div class="line">mynamespace.MY_BEER = 'stout';</div></pre></td></tr></table></figure>
+          
+        
+      </div>
+      <footer>
+        
+          <div class="alignright">
+            <a href="/2016/11/03/google-closure-anotations/#more" class="more-link">Continue Reading<i class="fa fa-long-arrow-right fa-1"></i></a>
+          </div>
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  
+    <div class="post-content-index">
+  
+      
+        <header>
+          <div class="icon"></div>
+            
+    
+  
+    
+      <h1 class="title transition"><a href="/2016/10/20/make-weapp-api-w3c/">记录将微信小程序的API适配到W3C标准</a></h1>
+    
+  
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-10-20T11:16:04.000Z">2016-10-20</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+          </ul>
+        </header>
+      
+      <div class="entry">
+        
+          
+            <h1 id="关于标准化"><a href="#关于标准化" class="headerlink" title="关于标准化"></a>关于标准化</h1><p>标准化是现代化生产的基础，所有厂商公用一套标准可以大大降低生产成本。所以世界上有各种各样的标准化组织，软件或互联网行业也是一样，发展成熟的标志就是所有的厂商都遵循一套标准。</p>
+<p>微信小程序虽然支持commonjs,却不支持npm，另外API完全是微信私有的标准。这让众多的已有模块和开发者想说爱你不容易。为了更好的复用已有模块，我开始了一个项目，用来把相同功能的API适配到标准w3c协议上。</p>
+<h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><p> <a href="https://github.com/stackOverMind/WeApp-adapter" target="_blank" rel="external">https://github.com/stackOverMind/WeApp-adapter</a></p>
+<h1 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h1><ul>
+<li>不可能适配所有的API，微信小程序并不是浏览器环境</li>
+<li>能够适配的API也不能完美适配</li>
+</ul>
+<h1 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程"></a>具体流程</h1><h2 id="项目搭建"><a href="#项目搭建" class="headerlink" title="项目搭建"></a>项目搭建</h2><p>由于工作的需要，首先进行的是对websocket的适配。项目搭建还是使用自己比较熟悉和流行的webpack。注意到很重要的一点信息：微信小程序支持es6的class，并且微信小程序默认在 <code>strict mode</code>运行。所以我决定直接使用es6编写业务代码。</p>
+<p>webpack.config.js:<br>
+          
+        
+      </div>
+      <footer>
+        
+          <div class="alignright">
+            <a href="/2016/10/20/make-weapp-api-w3c/#more" class="more-link">Continue Reading<i class="fa fa-long-arrow-right fa-1"></i></a>
+          </div>
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  
+    <div class="post-content-index">
+  
+      
+        <header>
+          <div class="icon"></div>
+            
+    
+  
+    
+      <h1 class="title transition"><a href="/2016/10/19/wilddog-weapp/">野狗与微信小程序结合</a></h1>
+    
+  
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-10-19T18:04:39.000Z">2016-10-19</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+          </ul>
+        </header>
+      
+      <div class="entry">
+        
+          
+            <h1 id="wilddog-weapp"><a href="#wilddog-weapp" class="headerlink" title="wilddog-weapp"></a>wilddog-weapp</h1><p>野狗(wilddog)微信小程序客户端 (preview)</p>
+<p>注意：</p>
+<ul>
+<li>由于微信没有正式公开小程序，所以此版本为预览版，请不要用于正式生产环境</li>
+</ul>
+<p>已知问题:</p>
+<ul>
+<li>在微信开发者工具中会出现一定概率的不能连接野狗服务器现象</li>
+<li>目前只支持数据同步部分功能，auth和用户管理相关功能并没有做支持</li>
+</ul>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/WildDogTeam/wilddog-weapp" target="_blank" rel="external">https://github.com/WildDogTeam/wilddog-weapp</a></p>
+<h2 id="引入野狗客户端"><a href="#引入野狗客户端" class="headerlink" title="引入野狗客户端"></a>引入野狗客户端</h2><ol>
+<li>将wilddog-weapp-all.js 直接放到微信小程序的项目中</li>
+<li><p>使用commonjs引入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var wilddog = require(&apos;wilddog-weapp-all&apos;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>初始化</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var config = &#123;</div><div class="line">    syncURL:&lt;your-app-url&gt;</div><div class="line">&#125;</div><div class="line">wilddog.initializeApp(config)</div></pre></td></tr></table></figure>
+<ol>
+<li>使用 <code>on</code>，<code>once</code>,<code>set</code>,<code>push</code>,<code>update</code> 等API进行数据同步操作。</li>
+</ol>
+<p>比如:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> ref = wilddog.sync().ref(<span class="string">'demo'</span>)</div><div class="line"></div><div class="line">ref.on(<span class="string">'child_changed'</span>,(snapshot) =&gt; &#123;</div><div class="line">  <span class="keyword">var</span> value = snapshot.val()</div><div class="line">  <span class="built_in">console</span>.log(value)</div><div class="line">&#125;)</div><div class="line"></div><div class="line">ref.on(<span class="string">'child_changed'</span>,(snapshot) =&gt; &#123;</div><div class="line">  <span class="comment">//you code</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line">ref.orderByPriority().limitToFirst(<span class="number">100</span>).once(<span class="string">'value'</span>,(snapshot)=&gt;&#123;</div><div class="line">    <span class="keyword">var</span> key = snapshot.key()</div><div class="line">    <span class="keyword">var</span> value = snapshot.val()</div><div class="line">&#125;)</div><div class="line">ref.child(<span class="string">'abc'</span>).set(<span class="number">123</span>)</div><div class="line"></div><div class="line">ref.child(<span class="string">'abc'</span>).push(<span class="string">'hello world'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(err)&#123;</div><div class="line">        <span class="comment">//sync to cloud with error</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span>&#123;</div><div class="line">        <span class="comment">//OK!</span></div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>具体参考 <a href="https://docs.wilddog.com/api/sync/web/api.html" target="_blank" rel="external">https://docs.wilddog.com/api/sync/web/api.html</a><br>支持 Wilddog.sync 下所有的API</p>
+<h2 id="DEMO"><a href="#DEMO" class="headerlink" title="DEMO"></a>DEMO</h2><p>目前只写了一个粗糙的demo<br><a href="https://github.com/stackOverMind/wilddog-weapp-demotodo" target="_blank" rel="external">https://github.com/stackOverMind/wilddog-weapp-demotodo</a></p>
+<h2 id="contribute"><a href="#contribute" class="headerlink" title="contribute"></a>contribute</h2><p>非常欢迎各种形式的issue，和代码。</p>
+
+          
+        
+      </div>
+      <footer>
+        
+          <div class="alignright">
+            <a href="/2016/10/19/wilddog-weapp/#more" class="more-link">Continue Reading<i class="fa fa-long-arrow-right fa-1"></i></a>
+          </div>
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  
+    <div class="post-content-index">
+  
+      
+        <header>
+          <div class="icon"></div>
+            
+    
+  
+    
+      <h1 class="title transition"><a href="/2016/10/17/hexo-trick/">hexo 使用心得</a></h1>
+    
+  
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-10-17T21:13:17.000Z">2016-10-17</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+          </ul>
+        </header>
+      
+      <div class="entry">
+        
+          
+            <h1 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h1><p>hexo 是一套强大而简单的博客系统，能够生成静态网页部署到任何容器中。而且有很多现成的theme可选，纯nodejs实现。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 全局安装hexo</div><div class="line">npm install -g hexo-cli </div><div class="line"># 建站</div><div class="line">hexo init &lt;forder&gt;</div><div class="line"># 新建一篇文章，在 source/_posts/目录下可以编辑这篇文章了</div><div class="line">hexo new post &lt;title&gt;</div><div class="line"># 生成静态网站</div><div class="line">hexo generate</div></pre></td></tr></table></figure>
+<p>详情移步<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">官方文档</a></p>
+<p>hexo 在本地玩6了之后我们就想找个地方部署起来，土豪的路子是到阿里云租个vps，然后装个nginx，不过现在是云服务的时代了，能轻则轻，仅仅为了搭建个博客买个阿里云有点太重，跟钱没啥关系。</p>
+<p>下面我介绍一个免费。。啊不对。。轻量级的解决方案：</p>
+<h1 id="hexo-结合-travis-CI，github-pages-做自动发布"><a href="#hexo-结合-travis-CI，github-pages-做自动发布" class="headerlink" title="hexo 结合 travis CI，github pages 做自动发布"></a>hexo 结合 travis CI，github pages 做自动发布</h1>
+          
+        
+      </div>
+      <footer>
+        
+          <div class="alignright">
+            <a href="/2016/10/17/hexo-trick/#more" class="more-link">Continue Reading<i class="fa fa-long-arrow-right fa-1"></i></a>
+          </div>
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  
+    <div class="post-content-index">
+  
+      
+        <header>
+          <div class="icon"></div>
+            
+    
+  
+    
+      <h1 class="title transition"><a href="/2016/10/13/strict-mode-problem/">记录一个JS严格模式遇到的问题</a></h1>
+    
+  
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-10-13T15:43:32.000Z">2016-10-13</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+          </ul>
+        </header>
+      
+      <div class="entry">
+        
+          
+            <h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>为微信小程序定制engine.io</p>
+<h1 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h1><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> <span class="keyword">this</span>&#125;)()</div></pre></td></tr></table></figure>
+<p>engine.io 使用webpack + babel 编译，其中一些依赖模块的写法并没有考虑 <code>use strict</code> 的情况。<br>上述代码在<code>use strict</code> 的情况下返回<code>undefined</code> 而不是全局对象。而webpack中使用 babel却自动在每个模块上自动添加<code>use strict</code> 。导致一些奇怪现象的发生。</p>
+<p>经过测试，在微信小程序中，默认是启用strict 模式的，而webpack并没有解决这个问题，简直 pain in the ass，先保留这个问题，留在以后解决。</p>
+<h1 id="update-20161017"><a href="#update-20161017" class="headerlink" title="update 20161017"></a>update 20161017</h1><p>问题是由</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">...</div><div class="line">function(global)&#123;</div><div class="line"><span class="comment">//your code</span></div><div class="line">&#125;(exports,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> <span class="keyword">this</span>&#125;())</div><div class="line"></div><div class="line">...</div></pre></td></tr></table></figure>
+<p>代码快引起，所以一个思路是去掉这个闭包<br>
+          
+        
+      </div>
+      <footer>
+        
+          <div class="alignright">
+            <a href="/2016/10/13/strict-mode-problem/#more" class="more-link">Continue Reading<i class="fa fa-long-arrow-right fa-1"></i></a>
+          </div>
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  
+    <div class="post-content-index">
+  
+      
+        <header>
+          <div class="icon"></div>
+            
+    
+  
+    
+      <h1 class="title transition"><a href="/2016/10/03/test/">test</a></h1>
+    
+  
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-10-03T20:40:44.000Z">2016-10-03</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+          </ul>
+        </header>
+      
+      <div class="entry">
+        
+          
+            
+          
+        
+      </div>
+      <footer>
+        
+          <div class="alignright">
+            <a href="/2016/10/03/test/#more" class="more-link">Continue Reading<i class="fa fa-long-arrow-right fa-1"></i></a>
+          </div>
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  
+    <div class="post-content-index">
+  
+      
+        <header>
+          <div class="icon"></div>
+            
+    
+  
+    
+      <h1 class="title transition"><a href="/2016/09/24/realtime/">web实时化（iweb ppt内容）</a></h1>
+    
+  
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-09-24T00:16:13.000Z">2016-09-24</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+          </ul>
+        </header>
+      
+      <div class="entry">
+        
+          
+            <p>本来说好的周日更新，但一直没时间。周一又是一周最忙的一天，所以长话短说，尽量简单阐述观点</p>
+<p>以下正文：</p>
+<h1 id="非实时的web"><a href="#非实时的web" class="headerlink" title="非实时的web"></a>非实时的web</h1><p><code>word wide web</code> (以下简称web)是1989年 由 TimBL在 <a href="https://en.wikipedia.org/wiki/CERN" target="_blank" rel="external">CERN</a>发明的。web现在已经是一个内容平台，应用平台。但是想要了解web为什么是现在的这种工作机制就必须回到本源，web其实只是被设计成为一个信息管理系统(information management system)。因为是一个信息关系系统，所以文档才是核心，所以dom里面最重要的对象之一是<code>ducument</code>。如果不回顾历史，新一代的开发者不会明白为什么这个对象叫做<code>document</code> 而不是 <code>app</code> 或者 <code>canvas</code>，或者 <code>world</code>。</p>
+<p>最初的web也只保留与信息管理相关的功能，只有HTML，内容按照标题<code>&lt;title&gt;</code> 段落<code>&lt;p&gt;</code> 等标签组织起来，那个时候css还没有出现（CSS和JS出现在1995年前后，由网景公司引进），样式是靠html标签来控制的。</p>
+<p>对于一个信息管理系统而言，不需要持续的交互，只需要一次性下载文档就可以，所以http协议的特点是：</p>
+<ul>
+<li>单向访问，只支持客户端主动访问服务端，而服务端不能把消息主动推送给客户端</li>
+<li>无连接，一次请求就建立一个连接，一次连接只服务一个请求</li>
+<li>无状态，连接本身不带有上下文信息，服务端也不保存</li>
+</ul>
+<blockquote>
+<p>对于历史的部分感兴趣的话可以wikipedia: <a href="https://en.wikipedia.org/wiki/Tim_Berners-Lee" target="_blank" rel="external">https://en.wikipedia.org/wiki/Tim_Berners-Lee</a></p>
+</blockquote>
+<p>需求催生新技术的产生，一直如此，人们需要更好的排版，CSS产生。需要更好的交互，JS产生…</p>
+<p>可以说web一直在进化，我个人总结一张图</p>
+<p><img src="/img/ppt-realtime-2.png" alt=""><br>
+          
+        
+      </div>
+      <footer>
+        
+          <div class="alignright">
+            <a href="/2016/09/24/realtime/#more" class="more-link">Continue Reading<i class="fa fa-long-arrow-right fa-1"></i></a>
+          </div>
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  
+    <div class="post-content-index">
+  
+      
+        <header>
+          <div class="icon"></div>
+            
+    
+  
+    
+      <h1 class="title transition"><a href="/2016/09/23/small-program/">闲话前端和微信小程序</a></h1>
+    
+  
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-09-23T19:09:30.000Z">2016-09-23</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+          </ul>
+        </header>
+      
+      <div class="entry">
+        
+          
+            <h2 id="这是一个大JavaScript开发者的时代"><a href="#这是一个大JavaScript开发者的时代" class="headerlink" title="这是一个大JavaScript开发者的时代"></a>这是一个大JavaScript开发者的时代</h2><p>微信小程序发布或泄露，在互联网圈被刷了屏。许多人高呼这是HTML5的又一大胜利，然而事实真的是这样的吗？随着更多细节的披露我们了解到微信小程序是基于类似React Native技术的。React Native严格来说并不能算HTML5技术。在移动端HTML5技术约等于hyper，最大特点是基于浏览器内核，HTML5的野心也是用浏览器覆盖所有的屏幕，用DOM霸占所有的开发者，基于浏览器内核才是关键。反观RN技术，或微信小程序并不依赖于任何浏览器内核，而是通过一个JS到native的bridge直接调用原生组件。RN本身就是对HTML5的背叛。所以，我认为与其说这是HTML5的胜利不如说这是HTML5的失败。 </p>
+<p>然而，不管HTML5也好，ReactNative也好，微信小程序也好，背后都离不开JavaScript技术。现在，使用JavaScript你可以使用NodeJs做服务端，可以做HTML5开发，也可做移动端。可以说在看得见的地方JavaScript已经无处不在了。所以，这是JavaScript工程师最好的时代。<br>
+          
+        
+      </div>
+      <footer>
+        
+          <div class="alignright">
+            <a href="/2016/09/23/small-program/#more" class="more-link">Continue Reading<i class="fa fa-long-arrow-right fa-1"></i></a>
+          </div>
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  
+    <div class="post-content-index">
+  
+      
+        <header>
+          <div class="icon"></div>
+            
+    
+  
+    
+      <h1 class="title transition"><a href="/2016/01/01/js-test/">js-test</a></h1>
+    
+  
+          <ul>
+            <li>
+              <span class="heading-span">Posted on: </span>
+              <time datetime="2016-01-01T15:40:39.000Z">2016-01-01</time>
+            </li>
+            
+              <li>
+                <span class="heading-span">By: </span>
+
+                
+                  <a href="https://github.com/stackOverMind" target="_blank">Jack X</a>
+
+                
+
+              </li>
+            
+          </ul>
+        </header>
+      
+      <div class="entry">
+        
+          
+            <p>1- 请写下这段代码的输出结果</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>;i&lt;<span class="number">10</span>;i++)&#123;</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(i)</div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2- 请用ES6的 class 改写下面代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> A = <span class="function"><span class="keyword">function</span>(<span class="params">p1</span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.p1 = p1</div><div class="line">&#125;</div><div class="line">A.prototype.hello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'hello world'</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3- 输出以下代码结果</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">console.log(null === undefined )</div><div class="line">console.log(!!&quot;&quot; == !1)</div></pre></td></tr></table></figure>
+<p>4- 输出以下代码结果</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>)</div><div class="line">&#125;</div><div class="line">a.b = b;</div><div class="line">a.b()</div><div class="line">b()</div><div class="line">b.call()</div><div class="line">b.call(a)</div></pre></td></tr></table></figure>
+<p>5- 输出以下代码的结果</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">56</span>].fiter(<span class="function">(<span class="params">a</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> a&lt;<span class="number">5</span></div><div class="line">&#125;).map((a)&#123;</div><div class="line">    <span class="keyword">return</span> a*a</div><div class="line">&#125;).reduce(<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> a + b</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>6- 写出堆排序的（伪）代码</p>
+
+          
+        
+      </div>
+      <footer>
+        
+          <div class="alignright">
+            <a href="/2016/01/01/js-test/#more" class="more-link">Continue Reading<i class="fa fa-long-arrow-right fa-1"></i></a>
+          </div>
+        
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright"><div class="padding">
+	
+	  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:jack-x.engineer">
+  </form>
+</div>
+	
+	  
+<div class="widget recent-post">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2017/07/13/thinking-in-block-chain/">区块链技术思考</a>
+      </li>
+    
+      <li>
+        <a href="/2016/11/03/google-closure-anotations/">google closure compiler 中的 annotation</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/20/make-weapp-api-w3c/">记录将微信小程序的API适配到W3C标准</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/19/wilddog-weapp/">野狗与微信小程序结合</a>
+      </li>
+    
+      <li>
+        <a href="/2016/10/17/hexo-trick/">hexo 使用心得</a>
+      </li>
+    
+  </ul>
+</div>
+
+	
+	  
+	
+	  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  
+    <a href="/tags/google-closure-compiler/">google closure compiler<small>1</small></a>
+  
+    <a href="/tags/hexo/">hexo<small>1</small></a>
+  
+    <a href="/tags/javascript/">javascript<small>1</small></a>
+  
+    <a href="/tags/react-native/">react-native<small>0</small></a>
+  
+    <a href="/tags/前端/">前端<small>4</small></a>
+  
+    <a href="/tags/区块链，分布式/">区块链，分布式<small>1</small></a>
+  
+    <a href="/tags/实时化/">实时化<small>1</small></a>
+  
+    <a href="/tags/小程序/">小程序<small>0</small></a>
+  
+    <a href="/tags/微信/">微信<small>0</small></a>
+  
+    <a href="/tags/微信小程序/">微信小程序<small>1</small></a>
+  
+    <a href="/tags/野狗/">野狗<small>0</small></a>
+  
+</div>
+
+	
+</div></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="padding">
+	<div class="alignleft">
+	  
+	  &copy; 2017 Jack X
+	  
+	  Powerd by <a href="http://hexo.io/" target="_blank">hexo</a>
+	</div>
+
+	<div class="alignright">
+		
+		
+		
+		
+		
+		
+		
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<div class="scroll-top"><i class="fa fa-arrow-circle-up"></i></div></footer>
+  <!-- mathJax -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    }); 
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+<script type="text/javascript">
+$(window).scroll(function() {
+
+    if($(this).scrollTop() > 400) {
+        $('.scroll-top').fadeIn(200);
+    } else {
+        $('.scroll-top').fadeOut(200);
+    }
+});
+
+$('.scroll-top').bind('click', function(e) {
+    e.preventDefault();
+    $('body,html').animate({scrollTop:0},200);
+});
+</script>
+
+
+</body>
+</html>
